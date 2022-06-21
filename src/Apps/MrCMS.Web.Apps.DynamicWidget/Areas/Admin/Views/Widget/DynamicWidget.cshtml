@@ -1,0 +1,56 @@
+﻿@using MrCMS.Helpers
+@using MrCMS.Services.Resources
+@using MrCMS.Web.Apps.DynamicWidget.Helper
+@model MrCMS.Web.Apps.DynamicWidget.Areas.Admin.Models.Widgets.DynamicWidgetModel
+
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-proprties-tab" data-toggle="tab" href="#nav-proprties" role="tab" aria-controls="nav-proprties" aria-selected="true">Proprties</a>
+        <a class="nav-item nav-link" id="nav-source-tab" data-toggle="tab" href="#nav-source" role="tab" aria-controls="nav-source" aria-selected="false">Source</a>
+    </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-proprties" role="tabpanel" aria-labelledby="nav-proprties-tab">
+        <div class="mt-3">
+            @await Html.RenderAdminProprties(x => x.Text, x => x.Properties)
+        </div>
+    </div>
+    <div class="tab-pane fade" id="nav-source" role="tabpanel" aria-labelledby="nav-source-tab">
+        <div class="alert alert-info mt-3" role="alert">
+            <strong>(@await Html.Resource("Heads up"))</strong> @await Html.Resource("You can drag and drop the tags below into the editor.")
+        </div>
+        <ul class="mb-0 list-unstyled" id="drag">
+            <li class="btn btn-default btn-sm mr-2 mb-2" draggable="true" data-text='[text name="inputname"]'>
+                <i class="fa fa-file-text"></i> Text
+            </li>
+            <li class="btn btn-default btn-sm mr-2 mb-2" draggable="true" data-text='[textarea name="inputname"]'>
+                <i class="fa fa-file-text"></i> Textarea
+            </li>
+            <li class="btn btn-default btn-sm mr-2 mb-2" draggable="true" data-text='[media name="inputname" width="" height="" class=""]'>
+                <i class="fa fa-image"></i> Media Selector
+            </li>
+            <li class="btn btn-default btn-sm mr-2 mb-2" draggable="true" data-text='[resource name="key" default="defaultValue"]'>
+                <i class="fa fa-language"></i> Translation
+            </li>
+            <li class="btn btn-default btn-sm mr-2 mb-2" draggable="true" data-text='[array name="inputname"][array-end]'>
+                <i class="fa fa-th-list"></i> Array
+            </li>
+            <li class="btn btn-default btn-sm mr-2 mb-2" draggable="true" data-text='[uniquekey name"inputname"]'>
+                <i class="fa fa-id-badge"></i> Unique Id
+            </li>
+            <li class="btn btn-default btn-sm mr-2 mb-2" draggable="true" data-text='[pageUrl name="inputname" type="TextPage" culture=""]'>
+                <i class="fa fa-id-badge"></i> Page Url
+            </li>
+        </ul>
+        <div class="form-group mt-3">
+            @Html.LabelFor(widget => widget.Text)
+            @Html.TextAreaFor(widget => widget.Text, new { @class = "ace-enabled" })
+        </div>
+    </div>
+</div>
+
+<style>
+    .dynamic-table > tbody > tr > td > .form-group{
+        margin: 0 !important;
+    }
+</style>

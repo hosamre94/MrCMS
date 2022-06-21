@@ -21,6 +21,7 @@ using MrCMS.Scheduling;
 using MrCMS.Services;
 using MrCMS.Settings;
 using MrCMS.Web.Apps.Articles;
+using MrCMS.Web.Apps.DynamicWidget;
 using NHibernate;
 using Quartz;
 using ILoggerFactory = Microsoft.Extensions.Logging.ILoggerFactory;
@@ -93,6 +94,7 @@ namespace MrCMS.Web
                 context.RegisterApp<MrCMSAdmin>();
                 context.RegisterApp<MrCMSCoreApp>();
                 context.RegisterApp<MrCMSArticlesApp>();
+                context.RegisterApp<MrCMSDynamicWidgetApp>();
             });
 
             services.AddMrCMSData(isInstalled, Configuration);

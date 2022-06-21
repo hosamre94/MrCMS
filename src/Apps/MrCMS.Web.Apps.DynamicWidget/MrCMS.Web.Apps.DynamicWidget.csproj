@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+		<StaticWebAssetBasePath Condition="$(StaticWebAssetBasePath) == ''">/Apps/DynamicWidget/</StaticWebAssetBasePath>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="Areas\Admin\Views\**" />
+		<EmbeddedResource Include="Areas\Admin\wwwroot\**" />
+		<EmbeddedResource Include="Views\**" />
+		<EmbeddedResource Include="wwwroot\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\Lib\MrCMS.Web.Admin\MrCMS.Web.Admin.csproj" />
+	  <ProjectReference Include="..\..\Lib\MrCMS\MrCMS.csproj" />
+	</ItemGroup>
+</Project>
