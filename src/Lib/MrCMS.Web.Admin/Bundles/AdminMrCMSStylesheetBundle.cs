@@ -19,8 +19,8 @@ namespace MrCMS.Web.Admin.Bundles
         {
             get
             {
-                yield return "/Areas/Admin/Content/lib/jquery-ui-bootstrap/jquery-ui-1.9.2.custom.css";
-                yield return "/Areas/Admin/Content/lib/font-awesome/css/font-awesome.css";
+                // yield return "/Areas/Admin/Content/lib/jquery-ui-bootstrap/jquery-ui-1.9.2.custom.css";
+                // yield return "/Areas/Admin/Content/lib/font-awesome/css/font-awesome.css";
                 //yield return "/Areas/Admin/Content/lib/sweetalert-master/lib/sweet-alert.css";
                 yield return "/Areas/Admin/Content/lib/select2-4.0.13/css/select2.css";
                 yield return "/Areas/Admin/Content/lib/select2-bootstrap4-theme-1.5.2/select2-bootstrap4.css";

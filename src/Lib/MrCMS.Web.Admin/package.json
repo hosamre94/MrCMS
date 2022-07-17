@@ -31,5 +31,8 @@
     "@parcel/transformer-sass": "^2.6.0",
     "concurrently": "^7.1.0",
     "parcel": "^2.6.0"
+  },
+  "dependencies": {
+    "@tabler/core": "^1.0.0-beta9"
   }
 }
