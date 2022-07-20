@@ -7,7 +7,7 @@ namespace MrCMS.Entities.Documents.Metadata
     public class TagPageContainerMetadata : WebpageMetadataMap<TagPageContainer>
     {
         public override string WebGetController => "TagPageContainer";
-        public override string IconClass => "fa fa-list";
+        public override string IconClass => "ti ti-list-details";
         public override ChildrenListType ChildrenListType => ChildrenListType.WhiteList;
         public override IEnumerable<Type> ChildrenList
         {

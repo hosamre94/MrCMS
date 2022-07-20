@@ -20,7 +20,7 @@ namespace MrCMS.Entities.Documents.Metadata
         /// <summary>
         /// The icon shown next to the page type in Mr CMS admin. By default icons are taken from bootstrap
         /// </summary>
-        public virtual string IconClass => "fa fa-file";
+        public virtual string IconClass => "ti ti-book-2";
 
         /// <summary>
         /// Controller used to render this pagetype when a GET/HEAD request is made. By Default is 'Webpage'

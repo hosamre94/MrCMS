@@ -8,6 +8,6 @@ namespace MrCMS.Web.Admin.Breadcrumbs
         public override string Controller => "Layout";
         public override string Action => "Index";
         public override bool IsNav => true;
-        public override string CssClass => "fa fa-delicious";
+        public override string CssClass => "ti ti-layout-dashboard";
     }
 }

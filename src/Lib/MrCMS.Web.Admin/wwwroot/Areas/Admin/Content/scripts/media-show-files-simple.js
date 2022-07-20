@@ -1,8 +1,9 @@
 ﻿export function setupSimpleFiles(parent = document) {
-    $(parent).find('.delete-file-simple').confirmation().on('click', function (e) {
-        e.preventDefault();
-        sendPostRequest(e.target);
-    });
+    //TODO
+    // $(parent).find('.delete-file-simple').confirmation().on('click', function (e) {
+    //     e.preventDefault();
+    //     sendPostRequest(e.target);
+    // });
 }
 
 function sendPostRequest(el) {

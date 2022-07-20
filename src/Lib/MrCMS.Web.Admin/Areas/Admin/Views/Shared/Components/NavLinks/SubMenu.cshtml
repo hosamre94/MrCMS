@@ -5,39 +5,43 @@
     var indexOf = ViewData["indexOf"] as string;
     var breadcrumbs = ViewData.Breadcrumbs();
 }
-<ul class="nav nav-treeview" id="@nav" aria-expanded="false">
-    @foreach (var item in Model)
-    {
-        if (item.Nodes != null && item.Nodes.Any())
-        {
-            var index = item.Nodes.IndexOf(item);
-            ViewData["submenu"] = item.Name;
-            indexOf = indexOf + index;
-            ViewData["indexOf"] = indexOf;
-            ViewData["item"] = item.Name;
+<div class="dropdown-menu" id="@nav">
+    <div class="dropdown-menu-columns">
+        <div class="dropdown-menu-column">
+            @foreach (var item in Model)
+            {
+                if (item.Nodes != null && item.Nodes.Any())
+                {
+                    var index = item.Nodes.IndexOf(item);
+                    ViewData["submenu"] = item.Name;
+                    indexOf = indexOf + index;
+                    ViewData["indexOf"] = indexOf;
+                    ViewData["item"] = item.Name;
 
-            <li class="nav-item has-treeview" data-menu="@indexOf">
-                <a href="#" class="nav-link @(item.IsActive(breadcrumbs) ? "active" : "")">
-                    <i class="fa  @(indexOf.Length > 1 ? "fa-circle" : "fa-circle-o") nav-icon"></i>
-                    <p>
-                        @await Html.Resource("Nav Links - " + item.Name, item.Name)
-                        <i class="fa fa-angle-left right"></i>
-                    </p>
-                </a>
-
-                <partial name="Components/NavLinks/SubMenu" model="item.Nodes" view-data="ViewData"/>
-            </li>
-        }
-        else
-        {
-            <li class="nav-item">
-                <a href="@item.Url" class="nav-link @(item.IsActive(breadcrumbs) ? "active" : "")" @(item.OpenInNewWindow ? "target=\"_blank\"":"")>
-                    <i class="fa fa-circle-o nav-icon"></i>
-                    <p>
-                        @await Html.Resource("Nav Links - " + item.Name, item.Name)
-                    </p>
-                </a>
-            </li>
-        }
-    }
-</ul>
+                    <div class="dropend" data-menu="@indexOf">
+                        <a href="#" class="nav-link dropdown-item dropdown-toggle @(item.IsActive(breadcrumbs) ? "active" : "")" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="false">
+                            <span class="nav-link-icon">
+                                <i class="ti @(indexOf.Length > 1 ? "ti-circle" : "ti-point")"></i>
+                            </span>
+                            <span class="nav-link-title">
+                                @await Html.Resource("Nav Links - " + item.Name, item.Name)
+                            </span>
+                        </a>
+                        <partial name="Components/NavLinks/SubMenu" model="item.Nodes" view-data="ViewData"></partial>
+                    </div>
+                }
+                else
+                {
+                    <a href="@item.Url" class="dropdown-item @(item.IsActive(breadcrumbs) ? "active" : "")" @(item.OpenInNewWindow ? "target=\"_blank\"" : "")>
+                        <span class="nav-link-icon">
+                            <i class="ti ti-point"></i>
+                        </span>
+                        <span class="nav-link-title">
+                            @await Html.Resource("Nav Links - " + item.Name, item.Name)
+                        </span>
+                    </a>
+                }
+            }
+        </div>
+    </div>
+</div>

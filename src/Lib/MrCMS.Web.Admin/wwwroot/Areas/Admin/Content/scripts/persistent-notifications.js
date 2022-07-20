@@ -23,10 +23,28 @@
             });
         };
         var displayNotification = function (notification) {
-            return $('<li>').addClass('list-group-item').attr('data-notification', true).html('<div class="notification-date">' + notification.date + '</div><div class="notification-msg">' + notification.message + '</div>');
+            return $(`<div class="list-group-item" data-notification="true">
+                            <div class="row align-items-center">
+                                <div class="col-auto">
+                                    <span class="status-dot d-block"></span>
+                                </div>
+                                <div class="col text-truncate">
+                                    <a href="#" class="text-body d-block">${notification.date}</a>
+                                    <div class="d-block text-muted text-truncate mt-n1">
+                                        ${notification.message}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`)
         };
         var displayNoNotifications = function () {
-            return $('<li class=\"list-group-item\">').html('No notifications');
+            return $('<div class="list-group-item">').html(`
+            <div class="empty" style="min-width: 300px">
+              <div class="empty-img">
+                <img src="/Areas/Admin/Content/img/empty_result.svg" height="128" alt="">
+              </div>
+              <p class="h3">No notifications found</p>
+            </div>`);
         };
         var prependNotification = function (notification) {
             listContainer.prepend(displayNotification(notification));   

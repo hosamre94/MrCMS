@@ -9,6 +9,6 @@ namespace MrCMS.Web.Admin.Breadcrumbs.Redirects
         public override string Action => "";
         public override bool IsNav => true;
         public override bool IsPlaceHolder => true;
-        public override string CssClass => "fa fa-reply";
+        public override string CssClass => "ti ti-switch-3";
     }
 }

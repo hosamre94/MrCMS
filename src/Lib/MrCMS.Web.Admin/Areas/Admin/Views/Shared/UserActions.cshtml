@@ -1,0 +1,31 @@
+﻿@using MrCMS.Services
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@inject IGetCurrentUser GetCurrentUser
+@inject ICurrentSiteLocator CurrentSiteLocator
+@{
+    var currentUser = await GetCurrentUser.Get();
+    var site = CurrentSiteLocator.GetCurrentSite();
+    var avatarImg = !string.IsNullOrEmpty(currentUser.AvatarImage) ? currentUser.AvatarImage : "https://via.placeholder.com/160";
+}
+
+<div class="nav-item dropdown">
+    <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
+        <span class="avatar avatar-sm" style="background-image: url(@avatarImg)" title="@currentUser.Name" data-bs-toggle="tooltip" data-bs-placement="bottom"></span>
+        <div class="d-none d-xl-block ps-2">
+            <div>@currentUser.Name.TruncateString(10)</div>
+            <div class="mt-1 small text-muted">@site.Name</div>
+        </div>
+    </a>
+    <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+        <partial name="SiteListNav"/>
+        <div class="dropdown-divider"></div>
+        <a href="@Url.Action("Edit", "User", new { id = @currentUser.Id })" class="dropdown-item">
+            <i class="ti ti-user me-2"></i>
+            @await Html.Resource("Profile")
+        </a>
+        <a href="@Url.Action("Logout", "Logout")" class="dropdown-item">
+            <i class="ti ti-logout me-2"></i>
+            @await Html.Resource("Logout")
+        </a>
+    </div>
+</div>

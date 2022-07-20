@@ -1,9 +1,17 @@
 ﻿@using MrCMS.Web.Admin.Services
+@using MrCMS.Services
 @inject IAdminSiteListService Service
+@inject ICurrentSiteLocator CurrentSiteLocator
+
 @model dynamic
+@{
+    var currentSite = CurrentSiteLocator.GetCurrentSite();
+}
 
-
-@foreach (var site in await Service.GetSites())
+@foreach (var site in (await Service.GetSites()).OrderBy(x => x.Id == currentSite.Id))
 {
-    <a href="@Context.Request.Scheme://@site.BaseUrl" class="dropdown-item">@site.Name</a>
+    <a href="@Context.Request.Scheme://@site.BaseUrl" class="dropdown-item" target="_blank">
+        <i class="ti me-2 @(site.Id == currentSite.Id ? "ti-home-2" : "ti-point")"></i>
+        @site.Name
+    </a>
 }

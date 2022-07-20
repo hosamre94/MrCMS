@@ -1,10 +1,14 @@
-﻿export function setupSortForm() {
-    $("[data-form-sort-form] #sortable").sortable({
-        update: function (event, ui) {
-            $('#sortable li').each(function (index, domElement) {
-                $(domElement).find('[name*="Order"]').val(index);
-            });
-        }
+﻿import Sortable from "sortablejs";
+
+export function setupSortForm() {
+    [].forEach.call(document.querySelectorAll("[data-form-sort-form] #sortable"), function (element) {
+        new Sortable(el, {
+            onUpdate: function (event) {
+                $('#sortable li').each(function (index, domElement) {
+                    $(domElement).find('[name*="Order"]').val(index);
+                });
+            }
+        })
     });
 
     $("[data-form-sort-form] #submit").click(function (e) {

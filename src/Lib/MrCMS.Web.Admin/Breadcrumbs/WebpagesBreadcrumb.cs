@@ -7,6 +7,6 @@ namespace MrCMS.Web.Admin.Breadcrumbs
         public override string Controller => "Webpage";
         public override string Action => "Index";
         public override bool IsNav => true;
-        public override string CssClass => "fa fa-file-code-o";
+        public override string CssClass => "ti ti-file-code-2";
     }
 }

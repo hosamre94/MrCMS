@@ -4,9 +4,8 @@
     var breadcrumbs = ViewData.Breadcrumbs();
 }
 
-<nav class="mt-2">
-    <ul class="nav nav-pills nav-sidebar flex-column  text-sm" data-widget="treeview" role="menu" data-accordion="true" id="sidebar-nav">
-
+<nav class="collapse navbar-collapse" id="navbar-menu">
+    <ul class="navbar-nav pt-lg-3" data-widget="treeview" role="menu" data-accordion="true" id="sidebar-nav">
         @foreach (var item in Model.Nodes)
         {
             if (item.Nodes.Any())
@@ -16,13 +15,14 @@
                 ViewData["submenu"] = item.Name;
 
 
-                <li class="nav-item has-treeview" data-menu="@indexOf">
-                    <a href="#" class="nav-link @(item.IsActive(breadcrumbs) ? "active" : "")">
-                        <i class="nav-icon @item.CssClass"> </i>
-                        <p>
+                <li class="nav-item dropdown" data-menu="@indexOf">
+                    <a href="#" class="nav-link dropdown-toggle @(item.IsActive(breadcrumbs) ? "active" : "")" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="false">
+                        <span class="nav-link-icon">
+                            <i class="fs-3 @item.CssClass"></i>
+                        </span>
+                        <span class="nav-link-title">
                             @await Html.Resource("Nav Links - " + item.Name, item.Name)
-                            <i class="fa fa-angle-left right"></i>
-                        </p>
+                        </span>
                     </a>
                     <partial name="Components/NavLinks/SubMenu" model="item.Nodes" view-data="ViewData"></partial>
 
@@ -31,11 +31,14 @@
             else
             {
                 <li class="nav-item">
-                    <a href="@item.Url" class="nav-link @item.SelectedClass(breadcrumbs)" @(item.OpenInNewWindow ? "target=\"_blank\"":"")>
-                        <i class="nav-icon @(item.CssClass ?? "fa fa-file-code-o")"></i>
-                        <p>
+                    <a href="@item.Url" class="nav-link @item.SelectedClass(breadcrumbs)" @(item.OpenInNewWindow ? "target=\"_blank\"" : "")>
+                        <i class="nav-icon "></i>
+                        <span class="nav-link-icon">
+                            <i class="fs-3 @(item.CssClass ?? "ti ti-circle-dot")"></i>
+                        </span>
+                        <span class="nav-link-title">
                             @await Html.Resource("Nav Links - " + item.Name, item.Name)
-                        </p>
+                        </span>
                     </a>
                 </li>
             }

@@ -49,7 +49,8 @@ export function setupMenu() {
 function setSideBarState() {
     const state = store.get(pushMenuState);
     if (state === 'collapsed' && !$("body").hasClass('sidebar-collapse') && $(window).width() > 992) {
-        $(window).PushMenu('toggle')
+        //TODO
+        // $(window).PushMenu('toggle')
     }
 }
 

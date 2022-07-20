@@ -1,12 +1,13 @@
-﻿export function initSortable() {
-    $("[data-sortable]").each((_, element) => {
-        const $element = $(element);
-        $element.sortable({
-            update: function (event, ui) {
-                $element.find('li').each(function (index, domElement) {
+﻿import Sortable from 'sortablejs';
+
+export function initSortable() {
+    [].forEach.call(document.querySelectorAll("[data-sortable]"), function (element) {
+        new Sortable(el, {
+            onUpdate: function (event) {
+                $(el).find('li').each(function (index, domElement) {
                     $(domElement).find('[name*="Order"]').val(index);
                 });
             }
-        });
+        })
     });
 }

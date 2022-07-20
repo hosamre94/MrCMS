@@ -64,22 +64,24 @@ export function setupEditWebpage(){
 
     //Permissions
     $.get('/Admin/Role/GetRolesForPermissions', function (data) {
-        scope.find("#FrontEndRoles").tagit({
-            autocomplete: { delay: 0, minLength: 0, source: data },
-            availableTags: data,
-            showAutocompleteOnFocus: true,
-            singleField: true,
-            placeholderText: "Click to add role."
-        });
+        //TODO
+        // scope.find("#FrontEndRoles").tagit({
+        //     autocomplete: {delay: 0, minLength: 0, source: data},
+        //     availableTags: data,
+        //     showAutocompleteOnFocus: true,
+        //     singleField: true,
+        //     placeholderText: "Click to add role."
+        // });
     });
 
-    scope.find("#MetaKeywords").tagit({
-        tagLimit: 15,
-        allowSpaces: true
-    });
+    //TODO
+    // scope.find("#MetaKeywords").tagit({
+    //     tagLimit: 15,
+    //     allowSpaces: true
+    // });
 
-    scope.on('change','#HasCustomPermissions',setPermissionVisibility);
-    scope.on('change','#PermissionType',setPermissionVisibility);
+    scope.on('change', '#HasCustomPermissions', setPermissionVisibility);
+    scope.on('change', '#PermissionType', setPermissionVisibility);
 
 
     function setPermissionVisibility() {

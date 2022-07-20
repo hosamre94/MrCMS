@@ -33,10 +33,10 @@ namespace MrCMS.Web.Admin.Bundles
                 yield return "/Areas/Admin/Content/lib/jquery/validate/jquery.validate.js";
                 yield return "/Areas/Admin/Content/lib/jquery/validate/jquery.validate.unobtrusive.js";
                 yield return "/Areas/Admin/Content/lib/jquery/validate/unobtrusive-bootstrap.js";
-                /*yield return "/Areas/Admin/Content/lib/bootstrap/dist/js/bootstrap.bundle.js";
-                yield return "/Areas/Admin/Content/lib/bootstrap-confirmation.js";
-                yield return "/Areas/Admin/Content/lib/adminlte/js/adminlte.js";*/
-                yield return "/Areas/Admin/Content/lib/tag-it.min.js";
+                //yield return "/Areas/Admin/Content/lib/bootstrap/dist/js/bootstrap.bundle.js";
+                //yield return "/Areas/Admin/Content/lib/adminlte/js/adminlte.js";
+                //yield return "/Areas/Admin/Content/lib/bootstrap-confirmation.js";
+                //yield return "/Areas/Admin/Content/lib/tag-it.min.js";
                 yield return "/Areas/Admin/Content/lib/jquery.noty.packaged.js";
                 yield return "/Areas/Admin/Content/lib/jstree/jstree.js";
                 yield return "/Areas/Admin/Content/lib/dropzone.js";

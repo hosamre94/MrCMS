@@ -33,6 +33,7 @@
     "parcel": "^2.6.0"
   },
   "dependencies": {
-    "@tabler/core": "^1.0.0-beta9"
+    "@tabler/core": "^1.0.0-beta9",
+    "sortablejs": "^1.15.0"
   }
 }

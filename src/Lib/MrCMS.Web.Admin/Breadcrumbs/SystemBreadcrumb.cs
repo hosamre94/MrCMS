@@ -9,6 +9,6 @@ namespace MrCMS.Web.Admin.Breadcrumbs
         public override string Action => "";
         public override bool IsPlaceHolder => true;
         public override bool IsNav => true;
-        public override string CssClass => "fa fa-cogs";
+        public override string CssClass => "ti ti-settings";
     }
 }

@@ -10,7 +10,7 @@ namespace MrCMS.Web.Apps.Articles.Metadata
     {
         public override string WebGetController => "ArticleList";
 
-        public override string IconClass => "fa fa-list";
+        public override string IconClass => "ti ti-list-details";
 
         public override ChildrenListType ChildrenListType => ChildrenListType.WhiteList;
 

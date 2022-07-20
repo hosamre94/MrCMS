@@ -5,7 +5,7 @@
 <div id="fileupload" class="dropzone" data-message="@await Html.Resource("Click here or drag files to upload")">
 
 </div>
-<input type="hidden" value="@Url.Action("Files", "File", new {id = Model?.Id})" id="action-url"/>
+<input type="hidden" value="@Url.Action("Files", "File", new { id = Model?.Id })" id="action-url"/>
 @if (Model != null)
 {
     <input type="hidden" value="@Model.Id" id="action-category-id"/>

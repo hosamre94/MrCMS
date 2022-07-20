@@ -1,4 +1,7 @@
-﻿@import "@tabler/core/src/scss/tabler";
+﻿$ti-font-path: '/node_modules/@tabler/icons/iconfont/fonts' !default;
+
+@import "@tabler/core/src/scss/tabler";
+@import "@tabler/icons/iconfont/tabler-icons";
 @import "dropzone";
 @import "featherlight";
 @import "jquery.mrcms-mediaselector";

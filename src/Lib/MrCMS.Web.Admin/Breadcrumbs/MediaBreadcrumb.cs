@@ -8,6 +8,6 @@ namespace MrCMS.Web.Admin.Breadcrumbs
         public override string Controller => "MediaCategory";
         public override string Action => "Index";
         public override bool IsNav => true;
-        public override string CssClass => "fa fa-file-image-o";
+        public override string CssClass => "ti ti-photo";
     }
 }
