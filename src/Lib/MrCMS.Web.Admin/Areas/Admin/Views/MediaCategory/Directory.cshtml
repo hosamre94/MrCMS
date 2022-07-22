@@ -6,53 +6,48 @@
 @inject IFileAdminService FileAdminService
 @{
     var files = await FileAdminService.GetFilesForFolder(Model);
-    var folders = await FileAdminService.GetSubFolders(Model);
 }
-<div data-update-media-folder="@Url.Action("Directory", "MediaCategory", Model)">
-    <div id="folder-container">
 
-        @if (folders.Any())
+<div class="row g-2" id="file-list" data-file-list="true" data-category-id="@(Model == null ? (int?)null : Model.Id)">
+    @if (files != null && files.Any())
+    {
+        foreach (var file in files)
         {
-            foreach (var folder in folders.OrderBy(x => x.DisplayOrder))
-            {
-                <div class="folder" data-id="folder-@folder.Id" data-url="@Url.Action("Show", "MediaCategory", new {id = folder.Id})" title="@folder.Name">
-                    <i class="fa fa-folder-open">&nbsp;</i> @folder.Name.TruncateString(28)
-                </div>
-            }
-            <div class="clearfix"></div>
-        }
-        <div id="file-list" data-file-list="true" data-category-id="@(Model == null ? (int?) null : Model.Id)">
-            @if (files != null && files.Any())
-            {
-                foreach (var file in files)
-                {
-                    <div class="file" data-id="file-@file.Id" data-type="file" data-url="@Url.Action("Edit", "File", new {Id = file.Id})">
-                        <div class="file-preview">
-                            <a title="@file.FileName">
-                                @if (file.IsImage())
-                                {
-                                    @await Html.RenderImage(file.FileUrl, new Size(100, 100))
-                                }
-                                else
-                                {
-                                    <i class="@file.FileExtension.GetIconClass()"> </i>
-                                }
-                            </a>
-                        </div>
-                        <div class="file-link">
-                            @Html.Link(file.FileName, file.FileUrl)
-                        </div>
+            <div class="col-xl-2 col-md-3 col-4">
+                <div class="d-flex flex-column">
+                    <label class="file form-imagecheck d-block">
+                        <input type="checkbox" value="1" class="form-imagecheck-input" data-id="file-@file.Id" data-type="file"/>
+                        @if (file.IsImage())
+                        {
+                            <span class="form-imagecheck-figure ratio ratio-4x3">
+                                @await Html.RenderImage(file.FileUrl, new Size(250, 250), file.FileName, attributes: new { @class = "w-100 img-fluid form-imagecheck-image" })
+                                <div class="form">
+                                </div>
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="form-imagecheck-figure ratio ratio-4x3">
+                                <div class="d-flex flex-column">
+                                    <img class="w-25 m-auto" src="@file.FileExtension.GetFileImage()" alt="File"/>
+                                </div>
+                            </span>
+                        }
+                    </label>
+                    <div class="p-2 bg-muted-lt">
+                        <a href="@Url.Action("Edit", "File", new { Id = file.Id })" data-toggle="fb-modal">
+                            @file.FileName.TruncateString(15)
+                        </a>
                     </div>
-                }
-                <div class="clearfix"> </div>
-                @Html.PagedListPager(files, page => Url.Action("Index", "MediaCategory", new {page, Model.SearchText, Model.SortBy, Model.Id}), MrCMSPagedListRenderOptions.Bootstrap4)
-            }
-            else
-            {
-                @Html.InfoBlock("", await Html.Resource("Admin Media No Files Message", "There are no files here yet - why not upload some?"))
-            }
-        </div>
-        <div class="clearfix"> </div>
+                </div>
 
-    </div>
+            </div>
+        }
+
+        @Html.PagedListPager(files, page => Url.Action("Index", "MediaCategory", new { page, Model.SearchText, Model.SortBy, Model.Id }), MrCMSPagedListRenderOptions.Bootstrap4)
+    }
+    else
+    {
+        @Html.InfoBlock("", await Html.Resource("Admin Media No Files Message", "There are no files here yet - why not upload some?"))
+    }
 </div>

@@ -2,17 +2,18 @@
 @{
     ViewBag.Title = "Manage Media";
 }
+<admin-header>
+    <row>
+        <admin-header-title title="@await Html.Resource("admin-media", "Media") "/>
+
+        <admin-header-actions>
+            <a href="@Url.Action("Add", "MediaCategory")" class="btn btn-primary" data-toggle="fb-modal">
+                <i class="icon ti ti-folder-plus"></i> @await Html.Resource("Admin Media New Folder Button", "New Folder")
+            </a>
+        </admin-header-actions>
+    </row>
+</admin-header>
+
 <div data-media-category>
-    <admin-header>
-        <row>
-            <admin-header-title title="@await Html.Resource("admin-media", "Media") "/>
-
-            <admin-header-actions>
-                <a href="@Url.Action("Add", "MediaCategory")" class="btn btn-primary">@await Html.Resource("Admin Media New Folder Button", "New Folder")</a>
-            </admin-header-actions>
-        </row>
-    </admin-header>
-
     <partial name="Manage" model="Model"/>
-
 </div>

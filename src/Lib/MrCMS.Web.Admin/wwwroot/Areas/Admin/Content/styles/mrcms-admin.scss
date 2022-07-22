@@ -51,7 +51,7 @@ label > input[type="checkbox"] {
 
 
 /*Media*/
-
+/*
 #file-list, #folder-container {
     height: auto;
     min-height: 400px;
@@ -126,25 +126,6 @@ label > input[type="checkbox"] {
                 margin-left: 40px;
             }
         }
-
-
-        .file-preview {
-            height: 115px;
-            padding: 10px 10px;
-            vertical-align: central;
-        }
-
-        .file-link {
-            height: 25px;
-            width: 100%;
-            bottom: 0;
-            position: absolute;
-
-            a {
-                display: block;
-                padding: 0 5px;
-            }
-        }
     }
 }
 
@@ -164,7 +145,7 @@ label > input[type="checkbox"] {
 .file.files-cut, .folder.files-cut {
     border: 1px dotted black;
     opacity: 0.5;
-}
+}*/
 
 #dropzone {
     text-align: center;
@@ -219,8 +200,33 @@ label > input[type="checkbox"] {
     }
 }
 
-ul#sidebar-nav > li > ul.nav > li > ul.nav {
-    margin-left: 1rem;
+.ratio > * {
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+}
+
+.ratio {
+    img {
+        -o-object-fit: cover;
+        object-fit: cover
+    }
+
+    &:after {
+        content: "";
+        display: block;
+        padding-top: var(--tblr-aspect-ratio)
+    }
+}
+
+.form-imagecheck-figure {
+    border: none;
+
+    &:before {
+        padding: 0;
+    }
 }
 
 @include media-breakpoint-up(md) {

@@ -27,7 +27,7 @@
 
             <admin-header-actions>
                 <span class="btn-group pull-right">
-                    @Html.ActionLink(await Html.Resource("admin-back", "Back"), "Show", new {id = ViewData["categoryId"]}, new {@class = "btn btn-secondary"})
+                    @Html.ActionLink(await Html.Resource("admin-back", "Back"), "Show", new { id = ViewData["categoryId"] }, new { @class = "btn btn-secondary" })
                     <button class="btn btn-primary">
                         @await Html.Resource("admin-save", "Save")
                     </button>

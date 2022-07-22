@@ -5,6 +5,7 @@
 @model MrCMS.Web.Admin.Models.UpdateFileSEOModel
 @inject ISession Session
 @{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPopup.cshtml";
     var file = Session.Get<MediaFile>(Model.Id);
 }
 
@@ -30,7 +31,7 @@
     }
     else
     {
-        <i class="@file.FileExtension.GetIconClass()"> </i>
+        <img src="@file.FileExtension.GetFileImage()" alt="File"/>
     }
     <br/>
     @Html.Link(file.FileName, file.FileUrl)

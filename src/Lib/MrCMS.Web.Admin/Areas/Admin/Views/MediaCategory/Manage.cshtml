@@ -1,57 +1,108 @@
 ﻿@using MrCMS.Web.Admin.ACL
 @using MrCMS.Web.Admin.Services
+@using System.Drawing
+@using MrCMS.Web.Admin.Helpers
+@using X.PagedList.Mvc.Core
+
 @model MrCMS.Web.Admin.Models.MediaCategorySearchModel
+
 @inject IFileAdminService FileAdminService
 @{
     var category = await FileAdminService.GetCategory(Model);
-    var sortByOptions = FileAdminService.GetSortByOptions(Model);
     var canAccessMediaToolsCut = await Html.CanAccess<MediaToolsACL>(MediaToolsACL.Cut);
     var canAccessMediaToolsDelete = await Html.CanAccess<MediaToolsACL>(MediaToolsACL.Delete);
+
+    var files = await FileAdminService.GetFilesForFolder(Model);
+    var folders = await FileAdminService.GetSubFolders(Model);
+    var sortByOptions = FileAdminService.GetSortByOptions(Model);
 }
 
-<div class="mb-3">
-    <partial name="MediaCategoryUpload" model="category"/>
+<div class="card card-stacked mb-3">
+    <div class="card-body">
+        <partial name="MediaCategoryUpload" model="category"/>
+    </div>
 </div>
 
-<form method="get">
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="form-group">
-                <label asp-for="SearchText"></label>
-                <input type="text" asp-for="SearchText" class="form-control"/>
+<div id="folder-list" class="row" data-update-media-folder="@Url.Action("Directory", "MediaCategory", Model)">
+    <div class="col-md-2">
+        <div class="card h-100">
+            <div class="card-header card-header-light">
+                <h3>
+                    @await Html.Resource("Folders")
+                    <span class="form-help" data-bs-toggle="popover" data-bs-placement="top" data-bs-html="true" data-bs-content="<p>@await Html.Resource("Double clicking on a folder to navigate to that folder")</p>">?</span>
+                </h3>
             </div>
+            @if (folders.Any())
+            {
+                <div class="list-group list-group-flush">
+                    @foreach (var folder in folders.OrderBy(x => x.DisplayOrder))
+                    {
+                        <a href="#" class="folder list-group-item list-group-item-action d-flex" data-id="folder-@folder.Id" data-url="@Url.Action("Show", "MediaCategory", new { id = folder.Id })" title="@folder.Name">
+                            <i class="fs-2 ti ti-folder text-black-50 align-bottom">&nbsp;</i>@folder.Name.TruncateString(18)
+
+                        </a>
+                    }
+                </div>
+            }
         </div>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <label asp-for="SortBy"></label>
-                <select asp-for="SortBy" asp-items="@sortByOptions" class="form-control"></select>
+    </div>
+    <div class="col-md-10">
+        <div class="card">
+            <div class="card-header card-header-light justify-content-between">
+                <div class="d-flex align-items-baseline">
+                    <h3>@await Html.Resource("All Files")</h3>
+                    @if (canAccessMediaToolsCut || canAccessMediaToolsDelete)
+                    {
+                        <span class="border-start ms-3 ps-3" id="file-tools">
+                            @{
+                                if (canAccessMediaToolsCut)
+                                {
+                                    <button id="cut-files" class="btn btn-white btn-icon" disabled data-bs-toggle="tooltip" data-bs-placement="bottom" title="@await Html.Resource("Cut")">
+                                        <i class="icon ti ti-cut"></i>
+                                    </button>
+                                }
+                                <button id="paste-files" class="btn btn-white btn-icon" disabled data-bs-toggle="tooltip" data-bs-placement="bottom" title="@await Html.Resource("Paste")">
+                                    <i class="icon ti ti-layers-subtract"></i>
+                                </button>
+                                if (canAccessMediaToolsDelete)
+                                {
+                                    <button id="delete-files" class="btn btn-white btn-icon" disabled data-bs-toggle="tooltip" data-bs-placement="bottom" title="@await Html.Resource("Delete")">
+                                        <i class="icon ti ti-trash"></i>
+                                    </button>
+                                }
+                                <button id="clear-files" class="btn btn-white btn-icon" data-bs-toggle="tooltip" data-bs-placement="bottom" title="@await Html.Resource("Clear")">
+                                    <i class="icon ti ti-eraser"></i>
+                                </button>
+                            }
+                        </span>
+                    }
+
+                </div>
+                <div>
+                    <form method="get">
+                        <div class="row g-2 justify-content-end">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" asp-for="SearchText" class="form-control" placeholder="@await Html.Resource("Search for…")"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <select asp-for="SortBy" asp-items="@sortByOptions" class="form-control select-2 "></select>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-white btn-icon">
+                                    <i class="icon ti ti-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
-        <div class="col-sm-2">
-            <div class="form-group">
-                <label class="d-none d-md-block">&nbsp;</label>
-                <button type="submit" class="btn btn-outline-primary form-control">@await Html.Resource("Search")</button>
+            <div class="card-body">
+                <partial name="Directory" model="Model"/>
             </div>
         </div>
     </div>
-</form>
-
-@if (canAccessMediaToolsCut || canAccessMediaToolsDelete)
-{
-    <span class="btn-group mb-3" id="file-tools">
-        @{
-            if (canAccessMediaToolsCut)
-            {
-                <button id="cut-files" class="btn btn-secondary" disabled>@await Html.Resource("Cut")</button>
-            }
-            <button id="paste-files" class="btn btn-secondary" disabled>@await Html.Resource("Paste")</button>
-            if (canAccessMediaToolsDelete)
-            {
-                <button id="delete-files" class="btn btn-secondary" disabled>@await Html.Resource("Delete")</button>
-            }
-            <button id="clear-files" class="btn btn-secondary">@await Html.Resource("Clear")</button>
-        }
-    </span>
-}
-
-<partial name="Directory" model="Model"/>
+</div>

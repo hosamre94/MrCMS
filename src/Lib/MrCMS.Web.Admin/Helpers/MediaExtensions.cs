@@ -2,30 +2,35 @@
 {
     public static class MediaExtensions
     {
-        public static string GetIconClass(this string extension)
+        private static string _fileTypesPath = @"\Areas\Admin\Content\img\fileTypes";
+
+        public static string GetFileImage(this string extension) => @$"{_fileTypesPath}\\{GetFileName(extension)}.svg";
+
+        public static string GetFileName(this string extension)
         {
             if (string.IsNullOrWhiteSpace(extension))
                 return "";
+            
             switch (extension.ToLower())
             {
                 case ".doc":
                 case ".docx":
-                    return "fa fa-file-word-o";
+                    return "word";
                 case "xls":
                 case ".xlsx":
                 case ".csv":
-                    return "fa fa-file-excel-o";
+                    return "excel";
                 case ".pdf":
-                    return "fa fa-file-pdf-o";
+                    return "pdf";
                 case ".txt":
-                    return "fa fa-file-text";
+                    return "txt";
                 case ".zip":
                 case ".rar":
                 case ".7z":
-                    return "fa fa-file-archive-o";
+                    return "zip";
                 case ".ppt":
                 case ".pptx":
-                    return "fa fa-file-powerpoint-o";
+                    return "ppt";
                 case ".mov":
                 case ".flv":
                 case ".mp4":
@@ -34,15 +39,17 @@
                 case ".mpeg":
                 case ".webm":
                 case ".ogv":
-                    return "fa fa-file-video-o";
+                    return "video";
                 case ".mp3":
-                    return "fa fa-music";
+                    return "music";
+                case ".svg":
+                    return "vector";
                 case ".htm":
                 case ".html":
-                    return "fa fa-html5";
+                    return "php";
             }
 
-            return "fa fa-file";
+            return "file";
         }
     }
 }

@@ -1,37 +1,49 @@
 ﻿export function fileTools(options) {
     const settings = $.extend({
-        fileList: "#folder-container",
+        //folderList: "#folder-list",
         folderClass: ".folder",
-        fileToolsContainer: "#file-tools",
-        uiSelectedClass: ".ui-selected",
+        activeFolderClass: '.active',
+
+        //fileList: '#file-list',
         fileClass: ".file",
-        cutFilesBtn: "#cut-files",
+        //uiSelectedClass: ".ui-selected",
+
+        fileToolsContainer: "#file-tools",
         deleteFilesBtn: "#delete-files",
         pasteFilesBtn: "#paste-files",
+        clearFilesBtn: "#clear-files",
+        cutFilesBtn: "#cut-files",
+
         filesStorageKey: "files",
         cutFilesStorageKey: "cut-files",
-        clearFilesBtn: "#clear-files",
-        fileCutClass: ".files-cut",
 
+        fileCutClass: ".opacity-50",
     }, options);
     let self;
     return {
         init: function () {
             self = this;
             $(document).on('initialize-plugins', function () {
-                $(settings.fileList).selectable({
-                    filter: ".file, .folder",
-                    stop: self.selectedStop,
-                    cancel: ".ui-selected, ul.pagination a"
-                });
+
             });
 
-            //enbales double click
-            $(document).on('click', settings.uiSelectedClass, function () { $(this).removeClass('ui-selected').parents('.ui-selectable').trigger('selectablestop'); });
+            //enable single click on the folder
+            $(document).on('click', settings.folderClass, function (e) {
+                e.preventDefault();
+                $(this).toggleClass(settings.activeFolderClass.replace('.', ''));
+                self.selectedStop();
+            })
 
-            $(document).on('dblclick', settings.fileClass + "," + settings.folderClass, function () {
+            //enbales double click on folder
+            $(document).on('dblclick', settings.folderClass, function () {
                 location.href = $(this).data('url');
             });
+
+            //enable single click on the files
+            $(document).on('click', settings.fileClass, function () {
+                self.selectedStop();
+            })
+
 
             $(document).on('click', settings.clearFilesBtn, function () {
                 self.clearSelectedFiles();
@@ -56,7 +68,17 @@
 
             $(document).on('click', settings.deleteFilesBtn, function (e) {
                 e.preventDefault();
-                swal({ title: "Are you sure?", text: "Your will not be able to recover this!", type: "warning", showCancelButton: true, confirmButtonColor: "#DD6B55", confirmButtonText: "Yes, delete it!", closeOnConfirm: true }, function () { self.deleteFiles(); });
+                swal({
+                    title: "Are you sure?",
+                    text: "Your will not be able to recover this!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes, delete it!",
+                    closeOnConfirm: true
+                }, function () {
+                    self.deleteFiles();
+                });
             });
 
             self.setSelectedFileData('');
@@ -122,63 +144,61 @@
             self.setOpacityOnCutFiles(self.getCutFileData());
         },
         setOpacityOnCutFiles: function (files) {
-            const fileIds = files.split(',');
-            $.each(fileIds, function (number) {
-                const selector = "[data-id='" + fileIds[number] + "']";
-                $(selector).addClass("files-cut");
+            let fileIds = files.split(',');
+            $.each(fileIds, function (_, id) {
+                const selector = "[data-id='" + id + "']";
+                const fileCutClass = settings.fileCutClass.replace('.', '');
+                if (isFileId(id))
+                    $(selector).parent().parent().addClass(fileCutClass);
+
+                if (isFolderId(id))
+                    $(selector).addClass(fileCutClass)
             });
         },
         selectedStop: function () {
-            const data = $(".file.ui-selected, .folder.ui-selected").map(function () {
-                return $(this).data('id');
-            }).get().join(",");
+            const data = $(settings.folderClass + settings.activeFolderClass + "," + settings.fileClass + ">input:checked")
+                .map(function () {
+                    return $(this).data('id');
+                }).get().join(",");
             self.setSelectedFileData(data);
             self.setButtonState();
         },
         setSelectedFiles: function () {
-            //set ui selected on elements
-            const files = self.getSelectedFileData();
-            let fileIds;
-            if (typeof files != 'undefined' && files != '' && files != null) {
-                fileIds = files.split(',');
-                $.each(fileIds, function (number) {
-                    const selector = "[data-id='" + fileIds[number] + "']";
-                    $(selector).addClass(settings.uiSelectedClass.replace('.', ''));
+            const filesAndFolders = self.getSelectedFileData();
+            if (typeof filesAndFolders != 'undefined' && filesAndFolders !== '' && filesAndFolders != null) {
+                const filesAndFoldersIds = filesAndFolders.split(',');
+                $.each(filesAndFoldersIds, function (_, id) {
+                    const selector = "[data-id='" + id + "']";
+                    if (isFolderId(id))
+                        $(selector).addClass(settings.activeFolderClass.replace('.', ''));
+
+                    if (isFileId(id))
+                        $(selector + ">input[type=checkbox]").prop("checked", true);
                 });
             }
-            const cutFiles = self.getCutFileData();
-            if (typeof cutFiles != 'undefined' && cutFiles != '' && cutFiles != null) {
-                fileIds = cutFiles.split(',');
-                $.each(fileIds, function (number) {
-                    const selector = "[data-id='" + fileIds[number] + "']";
-                    $(selector).addClass(settings.fileCutClass.replace('.', ''));
-                });
-            }
+            self.setOpacityOnCutFiles(self.getCutFileData());
             self.setButtonState();
         },
         setButtonState: function () {
             self.disableCut();
             self.disablePaste();
             self.disableDelete();
-            if (self.getSelectedFileData() != '') {
+            if (self.getSelectedFileData() !== '') {
                 self.enableCut();
-            } else if (self.getSelectedFileData() != '' && self.getCutFileData() == '') {
+                self.enableDelete();
+            } else if (self.getSelectedFileData() !== '' && self.getCutFileData() === '') {
                 self.enableCut();
             }
-            if (self.getCutFileData() != '') {
+            if (self.getCutFileData() !== '') {
                 self.enablePaste();
             }
-            self.enableDelete();
         },
         clearSelectedFiles: function () {
-            $.each($(".file" + settings.uiSelectedClass + "," + " .folder" + settings.uiSelectedClass), function () {
-                $(this).removeClass(settings.uiSelectedClass.replace('.', ''));
-            });
+            $(settings.fileClass + ">input:checked").prop("checked", false);
+            $(settings.folderClass).removeClass(settings.activeFolderClass.replace(".", ""));
         },
         clearCutStyles: function () {
-            $.each($(settings.fileCutClass), function () {
-                $(this).removeClass(settings.fileCutClass.replace('.', ''));
-            });
+            $(settings.fileCutClass).removeClass(settings.fileCutClass.replace('.', ''))
         },
         getSelectedFileData: function () {
             return store.get(settings.filesStorageKey);
@@ -201,9 +221,7 @@
             $(settings.cutFilesBtn).attr("disabled", "disabled");
         },
         enableDelete: function () {
-            $('.file.ui-selected, .folder.ui-selected').each(function () {
-                $(settings.deleteFilesBtn).removeAttr("disabled");
-            });
+            $(settings.deleteFilesBtn).removeAttr("disabled");
         },
         disableDelete: function () {
             $(settings.deleteFilesBtn).attr("disabled", "disabled");
@@ -215,7 +233,7 @@
             $(settings.pasteFilesBtn).attr("disabled", "disabled");
         }
     };
-};
+}
 
 // (function () {
 //     var fileTools = new FileTools().init();

@@ -10,7 +10,7 @@
                 <th class="col-6">File Name</th>
                 <th class="col-4">Alt / Description</th>
                 <th class="col-2">
-                    <a href="@Url.Action("Show", "MediaCategory", new {Id = Model.Id})" class="btn btn-sm btn-secondary" target="_new">Manage folder</a>
+                    <a href="@Url.Action("Show", "MediaCategory", new { Id = Model.Id })" class="btn btn-sm btn-secondary" target="_new">Manage folder</a>
                 </th>
             </tr>
 
@@ -29,7 +29,7 @@
                     </td>
                     <td>@file.Title @(!string.IsNullOrEmpty(file.Description) ? new HtmlString("<br />" + file.Description) : null)</td>
                     <th>
-                        <button data-value="@Url.Action("Delete", "File", new {Id = file.Id})" data-id="@file.Id" data-placement="bottom" class="btn btn-danger btn-sm delete-file-simple" type="button">Delete</button>
+                        <button data-value="@Url.Action("Delete", "File", new { Id = file.Id })" data-id="@file.Id" data-placement="bottom" class="btn btn-danger btn-sm delete-file-simple" type="button">Delete</button>
                     </th>
                 </tr>
             }
