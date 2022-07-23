@@ -364,7 +364,9 @@
                         .hide()
                         .attr('src', url)
                         .css(structure(this, 'iframe'))
-                        .on('load', function () { deferred.resolve($content.show()); })
+                        .on('load', function () {
+                            deferred.resolve($content.fadeIn('200'));
+                        })
                         // We can't move an <iframe> and avoid reloading it,
                         // so let's put it in place ourselves right now:
                         .appendTo(this.$instance.find('.' + this.namespace + '-content'));
@@ -563,4 +565,4 @@ $.featherlight.prototype.onResize = function () {
     }
 };
 
-$.featherlight.prototype.loading = '<img src="/Areas/Admin/Content/img/ajax-loader.gif" class="spinner">';
+$.featherlight.prototype.loading = '<div style="min-width: 35px;min-height: 35px"><div class="spinner-border border-5" role="status"></div></div>';

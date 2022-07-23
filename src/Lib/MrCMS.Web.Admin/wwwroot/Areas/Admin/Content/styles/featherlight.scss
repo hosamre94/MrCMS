@@ -22,11 +22,13 @@
 	text-align: center;
 	white-space: nowrap;
 	cursor: pointer;
-	background: #333;
+	background: #f5f7fb;
 	background: rgba(0, 0, 0, 0);
+
 	&:last-of-type {
-		background: rgba(0, 0, 0, 0.8);
+		background-color: #1e293b55;
 	}
+
 	&:before {
 		content: '';
 		display: inline-block;
@@ -50,6 +52,7 @@
 		cursor: auto;
 		white-space: normal;
 		max-width: 95%;
+		border-radius: 4px;
 	}
 	.featherlight-inner {
 		display: block;

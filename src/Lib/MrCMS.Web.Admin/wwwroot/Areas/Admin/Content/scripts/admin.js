@@ -4,7 +4,7 @@ import {initializeBootstrapPlugins} from "./initialize-bootstrap-plugins";
 import {setupGlobalization} from "./setup-globalisation";
 import {setupDatePickers} from "./setup-jquery-ui";
 import {setupAsyncPaging} from "./async-paging";
-import {setupFeatherlight} from "./setup-featherlight";
+import {setupFeatherlight, setupImageFeatherlight} from "./setup-featherlight";
 import {initializePlugins, registerGlobalFunctions} from "./initialize-plugins";
 import {registerPostToUrl} from "./post-to-url";
 import {postToUrlHelper} from "./post-to-url";
@@ -49,7 +49,8 @@ $(() => {
     initializeBootstrapPlugins()
     setupGlobalization()
     setupAsyncPaging();
-    setupFeatherlight()
+    setupFeatherlight();
+    setupImageFeatherlight();
     registerPostToUrl();
     setupResizeModal()
     registerDelayKeyup();

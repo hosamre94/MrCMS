@@ -5,6 +5,8 @@ const MrCMSFeatherlightSettings = {
         setCloseButtonPosition(this.$instance);
     },
     beforeOpen: function () {
+        const size = this.$currentTarget.data('fb-size');
+        this.iframeWidth = size === 'lg' ? 1140 : size === 'sm' ? 500 : size === 'xs' ? 350 : 800
     },
     onResize: function () {
         if (this.autoHeight) {
@@ -24,17 +26,20 @@ export function setCloseButtonPosition(contents) {
     contents.find(".featherlight-close-icon").css('right', offset.left - 20);
 }
 
-export function getRemoteModel(href) {
+export function getRemoteModel(href, size) {
     const link = $("<a>");
     link.attr('href', href);
     link.attr('data-toggle', 'fb-modal');
-    const settings = {};
+    link.attr('data-fb-size', size)
     link.featherlight(MrCMSFeatherlightSettings).click();
 }
 
 export function setupFeatherlight() {
-    const featherlightSettings = $.extend({}, MrCMSFeatherlightSettings, {
-        filter: '[data-toggle="fb-modal"]'
+    $('[data-toggle="fb-modal"]').featherlight(MrCMSFeatherlightSettings);
+}
+
+export function setupImageFeatherlight() {
+    $('[data-toggle="fb-image-modal"]').featherlight({
+        type: 'image',
     });
-    $(document).featherlight(featherlightSettings);
 }
