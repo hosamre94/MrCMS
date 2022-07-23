@@ -86,14 +86,14 @@ namespace MrCMS.Web.Admin.Controllers
         {
             List<SortItem> sortItems = await _mediaCategoryAdminService.GetSortItems(id);
 
-            return View(sortItems);
+            return PartialView(sortItems);
         }
 
         [HttpPost]
         public async Task<ActionResult> Sort(int id, List<SortItem> items)
         {
             await _mediaCategoryAdminService.SetOrders(items);
-            return RedirectToAction("Sort", new { id });
+            return RedirectToAction("Show", new { id });
         }
 
         public async Task<ActionResult> Show(MediaCategorySearchModel searchModel)
@@ -125,14 +125,14 @@ namespace MrCMS.Web.Admin.Controllers
             var category = await _mediaCategoryAdminService.Get(id);
             IList<ImageSortItem> sortItems = await _fileAdminService.GetFilesToSort(category);
 
-            return View(sortItems);
+            return PartialView(sortItems);
         }
 
         [HttpPost]
         public async Task<ActionResult> SortFiles(int? id, List<SortItem> items)
         {
             await _fileAdminService.SetOrders(items);
-            return RedirectToAction("SortFiles", new { id });
+            return RedirectToAction("Show", new { id });
         }
 
         /// <summary>

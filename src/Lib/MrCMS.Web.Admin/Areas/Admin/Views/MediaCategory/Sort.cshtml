@@ -1,48 +1,48 @@
 ﻿@model System.Collections.Generic.List<MrCMS.Models.SortItem>
 @{
-    ViewBag.Title = "Sort Catgeories";
-    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
-}
-
-@section JavaScriptBlock
-{
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $("#sortable").sortable({
-                update: function(event, ui) {
-                    $('#sortable li').each(function(index, domElement) {
-                        $(domElement).find('[name*="Order"]').val(index);
-                    });
-                }
-            });
-        });
-    </script>
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPopup.cshtml";
 }
 
 <form method="post" id="sort-media-category">
-
-    <admin-header>
-        <row>
-            <admin-header-title title="@await Html.Resource("admin-sort", "Sort") "/>
-
-            <admin-header-actions>
-                <button class="btn btn-primary">
-                    @await Html.Resource("admin-save", "Save")
-                </button>
-            </admin-header-actions>
-        </row>
-    </admin-header>
-
-    <ul id="sortable" class="list-group">
-        @for (var i = 0; i < Model.Count; i++)
-        {
-            <li class="list-group-item">
-                @Html.HiddenFor(model => model[i].Id)
-                @Html.HiddenFor(model => model[i].Order)
-                <i class="fa fa-arrows-alt"></i>&nbsp;&nbsp;
-                @Model[i].Name
-            </li>
-        }
-    </ul>
-
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">
+                @await Html.Resource("admin-sort", "Sort")
+            </h5>
+            <button type="submit" class="btn btn-primary">
+                <i class="icon ti ti-device-floppy"></i>
+                @await Html.Resource("Save")
+            </button>
+        </div>
+        <div class="modal-body">
+            @if (Model.Count == 0)
+            {
+                <div class="alert alert-info">
+                    @await Html.Resource("admin-no-files-to-sort", "There are no files to sort.")
+                </div>
+            }
+            else
+            {
+                <ul class="list-group">
+                    @for (var i = 0; i < Model.Count; i++)
+                    {
+                        <li class="list-group-item cursor-grab">
+                            <div class="row align-items-center">
+                                <div class="col text-truncate">
+                                    @Html.HiddenFor(model => model[i].Id)
+                                    @Html.HiddenFor(model => model[i].Order)
+                                    <div class="text-reset d-block">@Model[i].Name</div>
+                                </div>
+                                <div class="col-auto">
+                                    <span class="list-group-item-actions">
+                                        <i class="icon ti ti-drag-drop-2"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            }
+        </div>
+    </div>
 </form>

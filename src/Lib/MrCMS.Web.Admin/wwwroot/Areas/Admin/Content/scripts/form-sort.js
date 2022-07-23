@@ -1,10 +1,10 @@
 ﻿import Sortable from "sortablejs";
 
 export function setupSortForm() {
-    [].forEach.call(document.querySelectorAll("[data-form-sort-form] #sortable"), function (element) {
+    [].forEach.call(document.querySelectorAll("[data-form-sort-form] #sortable"), function (el) {
         new Sortable(el, {
             onUpdate: function (event) {
-                $('#sortable li').each(function (index, domElement) {
+                $(el).find('li').each(function (index, domElement) {
                     $(domElement).find('[name*="Order"]').val(index);
                 });
             }

@@ -1,53 +1,79 @@
 ﻿@using System.Drawing
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using MrCMS.Web.Admin.ACL
 @using MrCMS.Web.Admin.Helpers
 @using MrCMS.Web.Admin.Services
 @using X.PagedList.Mvc.Core
 @model MrCMS.Web.Admin.Models.MediaCategorySearchModel
 @inject IFileAdminService FileAdminService
 @{
-    var files = await FileAdminService.GetFilesForFolder(Model);
+    var canAccessMediaToolsCut = await Html.CanAccess<MediaToolsACL>(MediaToolsACL.Cut);
+    var canAccessMediaToolsDelete = await Html.CanAccess<MediaToolsACL>(MediaToolsACL.Delete);
+    var sortByOptions = FileAdminService.GetSortByOptions(Model);
 }
 
-<div class="row g-2" id="file-list" data-file-list="true" data-category-id="@(Model == null ? (int?)null : Model.Id)">
-    @if (files != null && files.Any())
-    {
-        foreach (var file in files)
-        {
-            <div class="col-xl-2 col-md-3 col-4">
-                <div class="d-flex flex-column">
-                    <label class="file form-imagecheck d-block">
-                        <input type="checkbox" value="1" class="form-imagecheck-input" data-id="file-@file.Id" data-type="file"/>
-                        @if (file.IsImage())
-                        {
-                            <span class="form-imagecheck-figure ratio ratio-4x3">
-                                @await Html.RenderImage(file.FileUrl, new Size(250, 250), file.FileName, attributes: new { @class = "w-100 img-fluid form-imagecheck-image" })
-                                <div class="form">
-                                </div>
-                            </span>
-                        }
-                        else
-                        {
-                            <span class="form-imagecheck-figure ratio ratio-4x3">
-                                <div class="d-flex flex-column">
-                                    <img class="w-25 m-auto" src="@file.FileExtension.GetFileImage()" alt="File"/>
-                                </div>
-                            </span>
-                        }
-                    </label>
-                    <div class="p-2 bg-muted-lt">
-                        <a href="@Url.Action("Edit", "File", new { Id = file.Id })" data-toggle="fb-modal">
-                            @file.FileName.TruncateString(15)
-                        </a>
-                    </div>
+
+<div class="row" data-update-media-directory="@Url.Action("Directory", "MediaCategory", Model)">
+    <div class="col-md-2">
+        <partial name="DirectoryFolders" model="Model"/>
+    </div>
+    <div class="col-md-10">
+        <div class="card">
+            <div class="card-header card-header-light justify-content-between">
+                <div class="d-flex align-items-baseline">
+                    <h3>@await Html.Resource("All Files")</h3>
+                    @if (canAccessMediaToolsCut || canAccessMediaToolsDelete)
+                    {
+                        <span class="border-start ms-3 ps-3" id="file-tools">
+                            @{
+                                if (canAccessMediaToolsCut)
+                                {
+                                    <button id="cut-files" class="btn btn-white btn-icon" disabled data-bs-toggle="tooltip" data-bs-placement="bottom" title="@await Html.Resource("Cut")">
+                                        <i class="icon ti ti-cut"></i>
+                                    </button>
+                                }
+                                <button id="paste-files" class="btn btn-white btn-icon" disabled data-bs-toggle="tooltip" data-bs-placement="bottom" title="@await Html.Resource("Paste")">
+                                    <i class="icon ti ti-layers-subtract"></i>
+                                </button>
+                                if (canAccessMediaToolsDelete)
+                                {
+                                    <button id="delete-files" class="btn btn-white btn-icon" disabled data-bs-toggle="tooltip" data-bs-placement="bottom" title="@await Html.Resource("Delete")">
+                                        <i class="icon ti ti-trash"></i>
+                                    </button>
+                                }
+                                <button id="clear-files" class="btn btn-white btn-icon" data-bs-toggle="tooltip" data-bs-placement="bottom" title="@await Html.Resource("Clear")">
+                                    <i class="icon ti ti-eraser"></i>
+                                </button>
+                            }
+                        </span>
+                    }
+
                 </div>
-
+                <div>
+                    <form method="get">
+                        <div class="row g-2 justify-content-end">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" asp-for="SearchText" class="form-control" placeholder="@await Html.Resource("Search for…")"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <select asp-for="SortBy" asp-items="@sortByOptions" class="form-control select-2 "></select>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-white btn-icon">
+                                    <i class="icon ti ti-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-        }
-
-        @Html.PagedListPager(files, page => Url.Action("Index", "MediaCategory", new { page, Model.SearchText, Model.SortBy, Model.Id }), MrCMSPagedListRenderOptions.Bootstrap4)
-    }
-    else
-    {
-        @Html.InfoBlock("", await Html.Resource("Admin Media No Files Message", "There are no files here yet - why not upload some?"))
-    }
+            <div class="card-body">
+                <partial name="DirectoryFiles" model="Model"/>
+            </div>
+        </div>
+    </div>
 </div>
