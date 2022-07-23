@@ -7,55 +7,81 @@
 @{
     Layout = "~/Areas/Admin/Views/Shared/_LayoutPopup.cshtml";
     var file = Session.Get<MediaFile>(Model.Id);
+    var fileUrl = await Html.GetImageUrl(file.FileUrl);
 }
-
-
 <form asp-controller="File" asp-action="Edit" method="post">
-    <admin-header>
-        <row>
-            <admin-header-title title="@await Html.Resource("Edit")"/>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">@await Html.Resource("Edit")</h5>
+        </div>
+        <div class="modal-body p-0">
+            <div class="row g-0">
+                <div class="col-md-6 bg-blue-lt p-2 border-end">
+                    <div style="height: 400px">
+                        <a class="btn btn-icon float-end" href="@fileUrl" data-toggle="fb-image-modal">
+                            <i class="icon ti ti-arrows-maximize"></i>
+                        </a>
 
-            <admin-header-actions>
-                <div class="btn-group">
-                    <a href="javascript:history.go(-1)" class="btn btn-secondary">@await Html.Resource("Back")</a>
-                    <input type="submit" class="btn-primary btn" value="@await Html.Resource("Save")"/>
+                        @if (file.IsImage())
+                        {
+                            @await Html.RenderImage(file.FileUrl, new Size(600, 600), attributes: new { @class = "h-100 d-block m-auto object-contain" })
+                        }
+                        else
+                        {
+                            <img class="h-100 w-25 d-block m-auto object-contain" src="@file.FileExtension.GetFileImage()" alt="File"/>
+                        }
+                    </div>
                 </div>
-            </admin-header-actions>
-        </row>
-    </admin-header>
+                <div class="col-md-6 d-flex flex-column justify-content-between">
+                    <div class="p-3">
+                        <dl class="row">
+                            @if (file.MediaCategory != null)
+                            {
+                                <dt class="col-5">@await Html.Resource("Folder"):</dt>
+                                <dd class="col-7">
+                                    <a href="@Url.Action("Show", "MediaCategory", new { id = file.MediaCategory.Id })">@file.MediaCategory.Name</a>
+                                </dd>
+                            }
+                            <dt class="col-5">@await Html.Resource("Size"):</dt>
+                            <dd class="col-7">@(file.ContentLength / 1000) KB</dd>
+                            <dt class="col-5">@await Html.Resource("Name"):</dt>
+                            <dd class="col-7">@file.FileName</dd>
+                            <dt class="col-5">@await Html.Resource("Created On"):</dt>
+                            <dd class="col-7">@file.CreatedOn.ToString("dd-MM-yyyy hh:mm tt")</dd>
+                            <dt class="col-5">@await Html.Resource("Updated On"):</dt>
+                            <dd class="col-7">@file.UpdatedOn.ToString("dd-MM-yyyy hh:mm tt")</dd>
+                            <dt class="col-5">@await Html.Resource("Extension"):</dt>
+                            <dd class="col-7">@file.FileExtension</dd>
+                        </dl>
+                        <div class="form-group mb-3">
+                            <label>@await Html.Resource("File URL")</label>
+                            <div class="input-icon">
+                                <input type="text" value="@fileUrl" class="form-control" readonly="">
+                                <span class="input-icon-addon">
+                                    <i class="ti ti-files"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            @Html.LabelFor(x => x.Title)
+                            @Html.TextBoxFor(x => x.Title, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.Title)
+                        </div>
+                        <div class="form-group mb-3">
+                            @Html.LabelFor(x => x.Description)
+                            @Html.TextAreaFor(x => x.Description, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.Description)
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="icon ti ti-device-floppy"></i>
+                            @await Html.Resource("Save")
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-
-    @if (file.IsImage())
-    {
-        @await Html.RenderImage(file.FileUrl, new Size(100, 100))
-    }
-    else
-    {
-        <img src="@file.FileExtension.GetFileImage()" alt="File"/>
-    }
-    <br/>
-    @Html.Link(file.FileName, file.FileUrl)
-
-
-    <br/>
-
-    @if (file.MediaCategory != null)
-    {
-        <p>
-            Folder:
-            <a href="@Url.Action("Show", "MediaCategory", new {id = file.MediaCategory.Id})">@file.MediaCategory.Name</a>
-        </p>
-    }
-    <hr/>
-    <div class="form-group">
-        @Html.LabelFor(x => x.Title)
-        @Html.TextBoxFor(x => x.Title, new {@class = "form-control"})
-        @Html.ValidationMessageFor(x => x.Title)
     </div>
-    <div class="form-group">
-        @Html.LabelFor(x => x.Description)
-        @Html.TextAreaFor(x => x.Description, new {@class = "form-control"})
-        @Html.ValidationMessageFor(x => x.Description)
-    </div>
-
 </form>
