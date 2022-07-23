@@ -51,102 +51,6 @@ label > input[type="checkbox"] {
 
 
 /*Media*/
-/*
-#file-list, #folder-container {
-    height: auto;
-    min-height: 400px;
-    width: 100%;
-    display: block;
-}
-
-.file,
-.folder {
-    width: 160px;
-    float: left;
-    margin-bottom: 10px;
-    margin-right: 10px;
-    color: #808080;
-    padding: 8px 8px;
-    border: 1px solid #e7e7e7;
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-
-    &:hover {
-        background: #e7e7e7;
-    }
-}
-
-.file {
-    float: left;
-    height: 150px;
-    position: relative;
-    width: 160px;
-    margin-bottom: 10px;
-    margin-right: 10px;
-    color: #808080;
-    border: 1px solid #e7e7e7;
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    user-select: none;
-
-    .folder {
-        cursor: default;
-    }
-
-    a {
-        display: block;
-        width: 100%;
-
-        img {
-            margin: 0 auto;
-            display: block;
-        }
-
-        i {
-            font-size: 90px;
-            margin: 0 auto;
-            text-align: center;
-            display: block;
-        }
-
-        &:hover {
-            text-decoration: none;
-        }
-    }
-
-    .checkbox {
-        label {
-            width: 100%;
-            display: block;
-            border: 1px solid #e7e7e7;
-
-            input {
-                margin-left: 40px;
-            }
-        }
-    }
-}
-
-.file.ui-selected, .folder.ui-selected, .file.ui-selecting, .folder.ui-selecting, .file.ui-selected a, .folder.ui-selected a, .file.ui-selecting a, .folder.ui-selecting a {
-    background: #428bca;
-    color: white;
-}
-
-.file, #file-list, .folder, #folder-container {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    -o-user-select: none;
-    user-select: none;
-}
-
-.file.files-cut, .folder.files-cut {
-    border: 1px dotted black;
-    opacity: 0.5;
-}*/
-
 #dropzone {
     text-align: center;
     font-weight: bold;
@@ -197,27 +101,6 @@ label > input[type="checkbox"] {
 
     .search-btn {
         width: 19%;
-    }
-}
-
-.ratio > * {
-    height: 100%;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 100%;
-}
-
-.ratio {
-    img {
-        -o-object-fit: cover;
-        object-fit: cover
-    }
-
-    &:after {
-        content: "";
-        display: block;
-        padding-top: var(--tblr-aspect-ratio)
     }
 }
 

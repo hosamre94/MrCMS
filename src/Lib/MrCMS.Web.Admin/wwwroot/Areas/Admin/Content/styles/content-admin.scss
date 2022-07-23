@@ -1,3 +1,4 @@
+/*
 .content-admin {
     height: 100vh;
     width: 100vw;
@@ -31,12 +32,12 @@
             width: 300px;
             height: calc(100vh - 4rem);
             border-right: 1px grey solid;
-            /*h3 {
+            !*h3 {
                 padding: 1rem 1.5rem;
                 margin: 0;
                 background-color: #eee;
                 border-bottom: 1px grey solid;
-            }*/
+            }*!
 
             .content {
                 overflow-y: auto;
@@ -92,5 +93,30 @@
                 }
             }
         }
+    }
+}
+*/
+.modal-header {
+    padding: 0 1.5rem;
+}
+
+.ratio > * {
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+}
+
+.ratio {
+    img {
+        -o-object-fit: cover;
+        object-fit: cover
+    }
+
+    &:after {
+        content: "";
+        display: block;
+        padding-top: var(--tblr-aspect-ratio)
     }
 }

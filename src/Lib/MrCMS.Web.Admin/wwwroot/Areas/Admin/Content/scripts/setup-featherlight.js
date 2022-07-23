@@ -35,11 +35,15 @@ export function getRemoteModel(href, size) {
 }
 
 export function setupFeatherlight() {
-    $('[data-toggle="fb-modal"]').featherlight(MrCMSFeatherlightSettings);
+    const featherlightSettings = $.extend({}, MrCMSFeatherlightSettings, {
+        filter: '[data-toggle="fb-modal"]'
+    });
+    $(document).featherlight(featherlightSettings);
 }
 
 export function setupImageFeatherlight() {
-    $('[data-toggle="fb-image-modal"]').featherlight({
+    $(document).featherlight({
+        filter: '[data-toggle="fb-image-modal"]',
         type: 'image',
     });
 }

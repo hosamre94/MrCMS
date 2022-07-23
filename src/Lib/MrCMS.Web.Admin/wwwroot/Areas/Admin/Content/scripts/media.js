@@ -1,13 +1,8 @@
 ﻿export function fileTools(options) {
     const settings = $.extend({
-        //folderList: "#folder-list",
         folderClass: ".folder",
         activeFolderClass: '.active',
-
-        //fileList: '#file-list',
         fileClass: ".file",
-        //uiSelectedClass: ".ui-selected",
-
         fileToolsContainer: "#file-tools",
         deleteFilesBtn: "#delete-files",
         pasteFilesBtn: "#paste-files",
@@ -107,7 +102,7 @@
                     if (data.message != '')
                         alert(data.message);
                     self.setButtonState();
-                    $(document).trigger('update-area', 'media-folder');
+                    $(document).trigger('update-area', 'media-directory');
                 }
             });
         },
@@ -133,7 +128,7 @@
                     if (data.message != '')
                         alert(data.message);
                     self.setButtonState();
-                    $(document).trigger('update-area', 'media-folder');
+                    $(document).trigger('update-area', 'media-directory');
                 }
             });
         },

@@ -30,7 +30,7 @@
                 myDropzone.on("queuecomplete", function (file) {
                     settings.onFileUploadStopped(file, myDropzone);
                     element.find(settings.progressBarSelector).hide();
-                    $(document).trigger('update-area', 'media-folder');
+                    $(document).trigger('update-area', 'media-directory');
                 });
 
                 myDropzone.on("totaluploadprogress", this.progressBar);

@@ -6,24 +6,20 @@
 }
 
 <form asp-controller="MediaCategory" asp-action="Add" method="post" id="add-media-category">
-
-    <admin-header>
-        <row>
-            <admin-header-title title="@await Html.Resource("admin-add", "Add") "/>
-
-            <admin-header-actions>
-                <button class="btn btn-primary">
-                    @await Html.Resource("Add")
-                </button>
-            </admin-header-actions>
-        </row>
-    </admin-header>
-
-    <div class="row">
-        <div class="col-lg-12">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">
+                @await Html.Resource("admin-add", "Add")
+            </h5>
+            <button type="submit" class="btn btn-primary">
+                <i class="icon ti ti-device-floppy"></i>
+                @await Html.Resource("Save")
+            </button>
+        </div>
+        <div class="modal-body">
             <input type="hidden" asp-for="ParentId"/>
             @Html.Hidden("ParentUrl", parent?.Path)
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label asp-for="Name"></label>
                 <input type="text" asp-for="Name" class="form-control"/>
                 <span asp-validation-for="Name"></span>

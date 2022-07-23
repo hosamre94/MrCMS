@@ -1,0 +1,27 @@
+﻿@using MrCMS.Web.Admin.Services
+@model MrCMS.Web.Admin.Models.MediaCategorySearchModel
+@inject IFileAdminService FileAdminService
+@{
+    var folders = await FileAdminService.GetSubFolders(Model);
+}
+
+<div id="folder-list" class="card h-100">
+    <div class="card-header card-header-light">
+        <h3>
+            @await Html.Resource("Folders")
+            <span class="form-help" data-bs-toggle="popover" data-bs-placement="top" data-bs-html="true" data-bs-content="<p>@await Html.Resource("Double clicking on a folder to navigate to that folder")</p>">?</span>
+        </h3>
+    </div>
+    @if (folders.Any())
+    {
+        <div class="list-group list-group-flush">
+            @foreach (var folder in folders.OrderBy(x => x.DisplayOrder))
+            {
+                <a href="#" class="folder list-group-item list-group-item-action d-flex" data-id="folder-@folder.Id" data-url="@Url.Action("Show", "MediaCategory", new { id = folder.Id })" title="@folder.Name">
+                    <i class="fs-2 ti ti-folder text-black-50 align-bottom">&nbsp;</i>@folder.Name.TruncateString(18)
+
+                </a>
+            }
+        </div>
+    }
+</div>

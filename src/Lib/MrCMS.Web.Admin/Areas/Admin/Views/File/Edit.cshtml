@@ -18,12 +18,11 @@
             <div class="row g-0">
                 <div class="col-md-6 bg-blue-lt p-2 border-end">
                     <div style="height: 400px">
-                        <a class="btn btn-icon float-end" href="@fileUrl" data-toggle="fb-image-modal">
-                            <i class="icon ti ti-arrows-maximize"></i>
-                        </a>
-
                         @if (file.IsImage())
                         {
+                            <a class="btn btn-icon float-end" href="@fileUrl" data-toggle="fb-image-modal">
+                                <i class="icon ti ti-arrows-maximize"></i>
+                            </a>
                             @await Html.RenderImage(file.FileUrl, new Size(600, 600), attributes: new { @class = "h-100 d-block m-auto object-contain" })
                         }
                         else
@@ -46,12 +45,14 @@
                             <dd class="col-7">@(file.ContentLength / 1000) KB</dd>
                             <dt class="col-5">@await Html.Resource("Name"):</dt>
                             <dd class="col-7">@file.FileName</dd>
+                            <dt class="col-5">@await Html.Resource("Extension"):</dt>
+                            <dd class="col-7">@file.FileExtension</dd>
+                            <dt class="col-5">@await Html.Resource("Created By"):</dt>
+                            <dd class="col-7">@(file.CreatedBy?.Name)</dd>
                             <dt class="col-5">@await Html.Resource("Created On"):</dt>
                             <dd class="col-7">@file.CreatedOn.ToString("dd-MM-yyyy hh:mm tt")</dd>
                             <dt class="col-5">@await Html.Resource("Updated On"):</dt>
                             <dd class="col-7">@file.UpdatedOn.ToString("dd-MM-yyyy hh:mm tt")</dd>
-                            <dt class="col-5">@await Html.Resource("Extension"):</dt>
-                            <dd class="col-7">@file.FileExtension</dd>
                         </dl>
                         <div class="form-group mb-3">
                             <label>@await Html.Resource("File URL")</label>
