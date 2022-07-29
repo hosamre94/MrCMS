@@ -2,19 +2,23 @@
 @{ Layout = "~/Areas/Admin/Views/Shared/_LayoutPopup.cshtml"; }
 
 <form asp-action="Add" asp-controller="LayoutArea" method="post">
-    @Html.AntiForgeryToken()
-    <fieldset>
-        <legend>
-            @await Html.Resource("Admin Layout Areas Add Title", "Add layout area")
-            <span class="btn-group pull-right">
-                <input type="submit" class="btn-success btn" value="@await Html.Resource("Save")" />
-            </span>
-        </legend>
-        <input type="hidden" asp-for="LayoutId"/>
-        <div class="form-group">
-            <label asp-for="AreaName"></label>
-            <input type="text" asp-for="AreaName" class="form-control"/>
-            <span asp-validation-for="AreaName"></span>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">
+                @await Html.Resource("Admin Layout Areas Add Title", "Add layout area")
+            </h5>
+            <button type="submit" class="btn btn-primary">
+                <i class="icon ti ti-device-floppy"></i>
+                @await Html.Resource("Save")
+            </button>
         </div>
-    </fieldset>
+        <div class="modal-body">
+            <input type="hidden" asp-for="LayoutId"/>
+            <div class="form-group">
+                <label asp-for="AreaName" class="form-label"></label>
+                <input type="text" asp-for="AreaName" class="form-control"/>
+                <span asp-validation-for="AreaName"></span>
+            </div>
+        </div>
+    </div>
 </form>

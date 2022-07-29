@@ -145,7 +145,7 @@ namespace MrCMS.Web.Admin.Services
                     Id = doc.Id,
                     ParentId = doc.Parent?.Id,
                     Name = doc.Name,
-                    IconClass = "fa fa-th-large",
+                    IconClass = "ti ti-layout-dashboard",
                     NodeType = type.Name,
                     Type = type.FullName,
                     HasChildren = await _session.QueryOver<Layout>().Where(arg => arg.Parent.Id == doc.Id).Cacheable()
@@ -153,6 +153,7 @@ namespace MrCMS.Web.Admin.Services
                     CanAddChild = true,
                     IsPublished = true,
                     RevealInNavigation = true,
+                    Sortable = query.Count > 1,
                     Url = _urlHelper.Action("Edit", type.Name, new { id = doc.Id })
                 };
                 adminTree.Nodes.Add(node);

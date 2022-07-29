@@ -3,7 +3,7 @@
     ViewBag.Title = "Sort Webpage";
 }
 
-@using (Html.BeginForm("SortWidgetsAction", "LayoutArea", FormMethod.Post, new {id = "edit-sort"}))
+@using (Html.BeginForm("SortWidgetsAction", "LayoutArea", FormMethod.Post, new { id = "edit-sort" }))
 {
     @Html.Hidden("returnUrl", ViewData["returnUrl"])
     @Html.Hidden("LayoutAreaId", Model.LayoutAreaId)
