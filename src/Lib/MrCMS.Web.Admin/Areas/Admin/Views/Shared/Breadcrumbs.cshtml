@@ -5,30 +5,32 @@
 }
 @if (breadcrumbs.Any())
 {
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb mb-0 rounded-0">
+    <div class="page-header">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 rounded-0">
 
-            <li class="breadcrumb-item">
-                <a href="@Url.Action("Index", "Home")">
-                    <i class="ti ti-home"></i>
-                    @await Html.Resource("Home")
-                </a>
-            </li>
-            @foreach (var breadcrumb in breadcrumbs)
-            {
-                if (breadcrumb == breadcrumbs.Last())
+                <li class="breadcrumb-item">
+                    <a href="@Url.Action("Index", "Home")">
+                        <i class="ti ti-home"></i>
+                        @await Html.Resource("Home")
+                    </a>
+                </li>
+                @foreach (var breadcrumb in breadcrumbs)
                 {
-                    <li class="breadcrumb-item active">
-                        <a>@breadcrumb.Name</a>
-                    </li>
+                    if (breadcrumb == breadcrumbs.Last())
+                    {
+                        <li class="breadcrumb-item active">
+                            <a>@breadcrumb.Name</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="breadcrumb-item">
+                            <a href="@breadcrumb.Link(Url)">@breadcrumb.Name</a>
+                        </li>
+                    }
                 }
-                else
-                {
-                    <li class="breadcrumb-item">
-                        <a href="@breadcrumb.Link(Url)">@breadcrumb.Name</a>
-                    </li>
-                }
-            }
-        </ol>
-    </nav>
+            </ol>
+        </nav>
+    </div>
 }

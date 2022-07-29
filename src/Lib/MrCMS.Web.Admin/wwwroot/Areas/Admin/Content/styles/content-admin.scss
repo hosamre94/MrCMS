@@ -120,3 +120,25 @@
         padding-top: var(--tblr-aspect-ratio)
     }
 }
+
+
+.card-welcome {
+    position: relative;
+    background: linear-gradient(145deg, rgba(255, 223, 212, 1) 0%, rgba(255, 235, 217, 1) 100%);
+    border-color: #ffd5bc;
+
+    .card-welcome-avatar {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+
+        img {
+            filter: drop-shadow(4px 27px 32px #fff);
+        }
+    }
+}
+
+.container, .container-fluid, .container-xxl, .container-xl, .container-lg, .container-md, .container-sm {
+    padding-right: 1rem;
+    padding-left: 1rem;
+}

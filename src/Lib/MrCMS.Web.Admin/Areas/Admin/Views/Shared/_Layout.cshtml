@@ -6,16 +6,14 @@
         <partial name="Sidebar"/>
     </aside>
 
-    <header class="navbar navbar-expand-md navbar-light d-none d-lg-flex d-print-none">
+    <header class="navbar navbar-expand-md navbar-light d-none d-lg-flex d-print-none sticky-top navbar-blured py-2">
         <partial name="Navbar"/>
     </header>
 
 
     <section class="page-wrapper">
         <div class="container-xl">
-            <div class="page-header">
-                <partial name="Breadcrumbs"/>
-            </div>
+            <partial name="Breadcrumbs"/>
             <div class="page-body mt-0">
                 <partial name="Messages"/>
                 @RenderBody()
