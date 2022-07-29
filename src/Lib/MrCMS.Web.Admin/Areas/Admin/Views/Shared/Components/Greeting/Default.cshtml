@@ -4,13 +4,29 @@
 @inject IGetCurrentUser _getCurrentUser
 @inject ICurrentSiteLocator _siteLocator
 
-<div class="card">
-    <div class="card-body">
+@{
+    var user = await _getCurrentUser.Get();
+    var currentSite = _siteLocator.GetCurrentSite();
+}
 
-        @{
-            var user = await _getCurrentUser.Get();
-            var currentSite = _siteLocator.GetCurrentSite();
-        }
-        @(string.Format(await Html.Resource("admin-dashboard-greeting", "Welcome {0}, you are currently administering web site {1}"), user.Name, currentSite.DisplayName)).
+<div class="card card-welcome mb-3">
+    <div class="card-welcome-avatar d-md-block d-none">
+        <img src="/Areas/Admin/Content/img/welcome-avatar.png" alt="avatar"/>
+    </div>
+    <div class="card-body p-4 d-flex flex-column">
+        <div class="d-flex flex-row">
+            <div class="flex-auto">
+                <h3 class="h1 mb-1">@(string.Format(await Html.Resource("admin-dashboard-greeting-title", "Welcome {0}"), user.Name)) 👋.</h3>
+                <div class="row">
+                    <p class="m-0 markdown col-12 col-lg-9 col-md-7">@(string.Format(await Html.Resource("admin-dashboard-greeting", "you are currently administering web site {0}"), currentSite.DisplayName))</p>
+                </div>
+            </div>
+        </div>
+        <div class="mt-3">
+            <a class="btn" target="_blank" href="/">
+                <i class="icon ti ti-home-2"></i>
+                @await Html.Resource("admin-dashboard-greeting-btn", "Go Home")
+            </a>
+        </div>
     </div>
 </div>
