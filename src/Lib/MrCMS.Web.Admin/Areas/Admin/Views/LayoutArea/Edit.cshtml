@@ -62,44 +62,46 @@
 </admin-header>
 
 
-@{
-    if (widgets.Any())
-    {
-        <table class="table table-condensed table-striped">
-            <thead>
-            <tr>
-                <th>
-                    @await Html.Resource("Name")
-                </th>
-                <th>
-                    @await Html.Resource("Type")
-                </th>
-                <th>
-                    @await Html.Resource("Actions")
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var widget in widgets)
-            {
+<card>
+    <card-body>
+        @if (widgets.Any())
+        {
+            <table class="table table-condensed table-striped">
+                <thead>
                 <tr>
-                    <td>@widget.Name</td>
-                    <td>
-                        @widget.WidgetTypeFormatted
-                    </td>
-                    <td>
-                        <div class="btn-group">
-                            @Html.ActionLink(await Html.Resource("Edit"), "Edit", "Widget", new { id = widget.Id }, new { @class = "btn btn-secondary btn-sm" })
-                            <a href="@Url.Action(await Html.Resource("Delete"), "Widget", new { id = widget.Id })" class="btn btn-sm btn-danger" data-toggle="fb-modal">@await Html.Resource("Delete")</a>
-                        </div>
-                    </td>
+                    <th>
+                        @await Html.Resource("Name")
+                    </th>
+                    <th>
+                        @await Html.Resource("Type")
+                    </th>
+                    <th>
+                        @await Html.Resource("Actions")
+                    </th>
                 </tr>
-            }
-            </tbody>
-        </table>
-    }
-    else
-    {
-        @Html.InfoBlock(await Html.Resource("Heads up"), await Html.Resource("Admin Layout Area Widgets Info", "Click add widget to add the first widget to this area."))
-    }
-}
+                </thead>
+                <tbody>
+                @foreach (var widget in widgets)
+                {
+                    <tr>
+                        <td>@widget.Name</td>
+                        <td>
+                            @widget.WidgetTypeFormatted
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                @Html.ActionLink(await Html.Resource("Edit"), "Edit", "Widget", new { id = widget.Id }, new { @class = "btn btn-secondary btn-sm" })
+                                <a href="@Url.Action(await Html.Resource("Delete"), "Widget", new { id = widget.Id })" class="btn btn-sm btn-danger" data-toggle="fb-modal">@await Html.Resource("Delete")</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            @Html.InfoBlock(await Html.Resource("Heads up"), await Html.Resource("Admin Layout Area Widgets Info", "Click add widget to add the first widget to this area."))
+        }
+    </card-body>
+</card>

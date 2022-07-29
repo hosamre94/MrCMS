@@ -2,29 +2,49 @@
 @{
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-<form asp-controller="Widget" asp-action="Add" asp-route-id="" method="post" data-add-widget-form>
-    <fieldset style="min-height: 500px">
-        <legend>
-            @await Html.Resource("Admin Widget Add Widget", "Add Widget")
-            <span class="btn-group pull-right">
-                <input type="submit" class="btn-success btn" value="@await Html.Resource("Save")" id="add-widget"/>
-            </span>
-        </legend>
-        @Html.HiddenFor(model => model.LayoutAreaId)
-        @Html.Hidden("ReturnUrl", ViewData["return-url"])
-        @Html.ReturnToReferrer()
-        <div class="form-group">
-            @Html.LabelFor(x => x.WidgetType)
-            @Html.DropDownListFor(x => x.WidgetType, WidgetHelper.WidgetTypeDropdownItems, new {@class = "form-control"})
-            @Html.ValidationMessageFor(x => x.WidgetType)
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name)
-            @Html.TextBoxFor(model => model.Name, Model.Name, new {@class = "form-control"})
-            @Html.ValidationMessageFor(model => model.Name)
-        </div>
-        <div data-additional-properties="true">
+<form asp-controller="Widget" asp-action="Add" asp-route-id="" method="post" data-add-widget-form class="mt-3">
+    <admin-header>
+        <row>
+            <admin-header-title title="@await Html.Resource("Admin Widget Add Widget", "Add Widget")"/>
 
-        </div>
-    </fieldset>
+            <admin-header-actions>
+                <a href="@Url.Action("Edit", "LayoutArea", new { Id = Model.LayoutAreaId })" class="btn btn-dark">
+                    <i class="icon ti ti-arrow-back"></i>
+                    @await Html.Resource("admin-back", "Back")
+                </a>
+                <button class="btn btn-primary" id="add-widget">
+                    <i class="icon ti ti-plus"></i>
+                    @await Html.Resource("admin-add", "Add")
+                </button>
+            </admin-header-actions>
+        </row>
+    </admin-header>
+    <card>
+        <card-body>
+            @Html.HiddenFor(model => model.LayoutAreaId)
+            @Html.Hidden("ReturnUrl", ViewData["return-url"])
+            @Html.ReturnToReferrer()
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        @Html.TextBoxFor(model => model.Name, Model.Name, new { @class = "form-control" })
+                        @Html.LabelFor(model => model.Name, new { @class = "form-label" })
+                        @Html.ValidationMessageFor(model => model.Name)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        @Html.DropDownListFor(x => x.WidgetType, WidgetHelper.WidgetTypeDropdownItems, new { @class = "form-select" })
+                        @Html.LabelFor(x => x.WidgetType, new { @class = "form-label" })
+                        @Html.ValidationMessageFor(x => x.WidgetType)
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="mt-3" data-additional-properties="true">
+            </div>
+        </card-body>
+
+    </card>
 </form>

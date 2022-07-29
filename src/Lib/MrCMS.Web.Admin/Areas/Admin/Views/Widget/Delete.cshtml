@@ -1,19 +1,22 @@
 ﻿@model MrCMS.Web.Admin.Models.UpdateWidgetModel
 @{
-    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPopup.cshtml";
 }
-@using (Html.BeginForm("Delete", "Widget", new {id = Model.Id}, FormMethod.Post))
+@using (Html.BeginForm("Delete", "Widget", new { id = Model.Id }, FormMethod.Post))
 {
     @Html.Hidden("ReturnUrl", ViewData["return-url"])
-    <fieldset>
-        <legend>
-            @await Html.Resource("Admin Widget Confirm Delete", "Confirm Delete")
-
-            <span class="btn-group pull-right">
-                <input type="submit" class="btn btn-danger" value="@await Html.Resource("Delete")"/>
-            </span>
-        </legend>
-
-        @Html.InfoBlock(await Html.Resource("Heads up") + "!", await Html.Resource("Admin Delete Info Warning", "Deleting this cannot be undone."), AlertType.danger)
-    </fieldset>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">
+                @await Html.Resource("Admin Widget Confirm Delete", "Confirm Delete")
+            </h5>
+            <button type="submit" class="btn btn-danger">
+                <i class="icon ti ti-trash"></i>
+                @await Html.Resource("Delete")
+            </button>
+        </div>
+        <div class="modal-body">
+            @Html.InfoBlock(await Html.Resource("Heads up") + "!", await Html.Resource("Admin Delete Info Warning", "Deleting this cannot be undone."), AlertType.danger)
+        </div>
+    </div>
 }
