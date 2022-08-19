@@ -38,20 +38,37 @@
             @if (widget.IsTypeCacheable())
             {
                 <hr/>
-                <h4>@await Html.Resource("Advanced")</h4>
-                <hr class="small-margin"/>
-                <div class="form-group">
-                    @Html.InlineCheckboxFor(model => model.Cache)
+                <div class="mb-3">
+                    <div class="form-label">@await Html.Resource("Caching")</div>
+                    <label class="form-check form-switch d-inline-block">
+                        <input asp-for="Cache" class="form-check-input" type="checkbox">
+                        <span class="form-check-label">@await Html.Resource("Enable widget caching")</span>
+                    </label>
+                    <small class="form-hint">
+                        @await Html.Resource("admin-widget-caching-hint", "Cache the widget to reduce the work required to generate the content.")
+                    </small>
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CacheLength)
-                    @Html.TextBoxFor(model => model.CacheLength, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.CacheLength)
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CacheExpiryType)
-                    @Html.DropDownListFor(model => model.CacheExpiryType, cacheExpiryOptions, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.CacheExpiryType)
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="d-flex">
+                                @Html.LabelFor(model => model.CacheLength, new { @class = "form-label" })
+                                <span class="form-help ms-2" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="<p class='mb-0'>@await Html.Resource("CacheLength", "for how long we will cache the widget results in milliseconds.")</p>" data-bs-html="true">?</span>
+                            </div>
+                            @Html.TextBoxFor(model => model.CacheLength, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.CacheLength)
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="d-flex">
+                                @Html.LabelFor(model => model.CacheExpiryType, new { @class = "form-label" })
+                                <span class="form-help ms-2" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="<p>Determine when the cache entry will expire</p><ul><li><b>Sliding: </b>The entry will stay in the cache as long as it is read within the defined time</li><li><b>Absolute: </b>the entry will exipre once that point in time has elapsed.</li></ul>" data-bs-html="true">?</span>
+                            </div>
+                            @Html.DropDownListFor(model => model.CacheExpiryType, cacheExpiryOptions, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.CacheExpiryType)
+                        </div>
+                    </div>
                 </div>
             }
         </card-body>
