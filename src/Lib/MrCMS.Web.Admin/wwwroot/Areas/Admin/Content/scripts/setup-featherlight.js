@@ -1,9 +1,7 @@
 const MrCMSFeatherlightSettings = {
     type: 'iframe',
     iframeWidth: 800,
-    afterOpen: function () {
-        setCloseButtonPosition(this.$instance);
-    },
+    openSpeed: 0,
     beforeOpen: function () {
         const size = this.$currentTarget.data('fb-size');
         this.iframeWidth = size === 'lg' ? 1140 : size === 'sm' ? 500 : size === 'xs' ? 350 : 800
@@ -15,7 +13,6 @@ const MrCMSFeatherlightSettings = {
             // Then set to the full height:
             this.$content.css('height', this.$content.contents().find('body')[0].scrollHeight);
         }
-        setCloseButtonPosition(this.$instance);
     }
 };
 

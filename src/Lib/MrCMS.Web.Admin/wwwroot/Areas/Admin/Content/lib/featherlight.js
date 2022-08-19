@@ -135,10 +135,10 @@
                 css = !self.resetCss ? self.namespace : self.namespace + '-reset', /* by adding -reset to the classname, we reset all the default css */
                 $background = $(self.background || [
                     '<div class="' + css + '-loading ' + css + '">',
-                    '<div class="' + css + '-content">',
                     '<span class="' + css + '-close-icon ' + self.namespace + '-close">',
                     self.closeIcon,
                     '</span>',
+                    '<div class="' + css + '-content">',
                     '<div class="' + self.namespace + '-inner">' + self.loading + '</div>',
                     '</div>',
                     '</div>'].join('')),
@@ -365,7 +365,7 @@
                         .attr('src', url)
                         .css(structure(this, 'iframe'))
                         .on('load', function () {
-                            deferred.resolve($content.fadeIn('200'));
+                            deferred.resolve($content.fadeIn(self.openSpeed));
                         })
                         // We can't move an <iframe> and avoid reloading it,
                         // so let's put it in place ourselves right now:
@@ -565,4 +565,4 @@ $.featherlight.prototype.onResize = function () {
     }
 };
 
-$.featherlight.prototype.loading = '<div style="min-width: 35px;min-height: 35px"><div class="spinner-border border-5" role="status"></div></div>';
+$.featherlight.prototype.loading = '<div style="position: absolute;left: 50%;top: 50%;transform: translate(-50%,-50%)" class="rounded p-2 bg-white"><div class="loader" role="status"></div></div>';

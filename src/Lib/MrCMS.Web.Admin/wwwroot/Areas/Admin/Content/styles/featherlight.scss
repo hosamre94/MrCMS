@@ -48,7 +48,6 @@
 		margin-left: 5%;
 		margin-right: 5%;
 		max-height: 95%;
-		background: #fff;
 		cursor: auto;
 		white-space: normal;
 		max-width: 95%;
@@ -60,15 +59,16 @@
 	.featherlight-close-icon {
 		position: fixed;
 		z-index: 9999;
-		top: 0;
-		right: 0;
-		line-height: 25px;
-		width: 25px;
+		top: 15px;
+		right: 15px;
+		line-height: 35px;
+		width: 35px;
 		cursor: pointer;
 		text-align: center;
 		font: Arial, sans-serif;
 		background: #fff;
 		color: #000;
+		border-radius: 30%;
 	}
 	.featherlight-image {
 		width: 100%;
@@ -79,26 +79,36 @@
 }
 .featherlight-iframe {
 	.featherlight-content {
+		animation: display .3s cubic-bezier(0, 0, 0, 1) forwards;
 		border-bottom: 0;
 		padding: 0;
 	}
 }
+
 .featherlight-loading {
 	.featherlight-content {
 		background: none;
 		min-width: inherit;
 		min-height: inherit;
 	}
+
 	.featherlight-close {
 		display: none;
 	}
 }
-iframe.featherlight-inner {
-	width: 400px;
-	max-width: 100%;
-	max-height: 95%;
-	padding: 0;
+
+.featherlight-inner {
+	min-width: 75px;
+	min-height: 75px;
+
+	&iframe {
+		width: 400px;
+		max-width: 100%;
+		max-height: 95%;
+		padding: 0;
+	}
 }
+
 @media only screen and (max-width: 1024px) {
 	.featherlight {
 		.featherlight-content {
@@ -108,5 +118,14 @@ iframe.featherlight-inner {
 			padding: 10px 10px 0;
 			border-bottom: 10px solid transparent;
 		}
+	}
+}
+
+@keyframes display {
+	from {
+		transform: translateY(-25px) scale(0.98);
+	}
+	to {
+		transform: translateY(0px) scale(1);
 	}
 }
