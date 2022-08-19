@@ -11,7 +11,6 @@
     <admin-header>
         <row>
             <admin-header-title title="@(!string.IsNullOrWhiteSpace(Model.Name) ? Model.Name : widget.WidgetTypeFormatted)"/>
-
             <admin-header-actions>
                 <a href="@Url.Action("Edit", "LayoutArea", new { Id = widget.LayoutArea.Id })" class="btn btn-dark">
                     <i class="icon ti ti-arrow-back"></i>
@@ -36,25 +35,25 @@
 
             @await Html.RenderUpdateCustomAdminProperties(widget)
 
-            @*@if (widget.IsTypeCacheable())
-                    {
-                        <hr/>
-                        <h4>@await Html.Resource("Advanced")</h4>
-                        <hr class="small-margin"/>
-                        <div class="form-group">
-                            @Html.InlineCheckboxFor(model => model.Cache)
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.CacheLength)
-                            @Html.TextBoxFor(model => model.CacheLength, new {@class = "form-control"})
-                            @Html.ValidationMessageFor(model => model.CacheLength)
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.CacheExpiryType)
-                            @Html.DropDownListFor(model => model.CacheExpiryType, cacheExpiryOptions, new {@class = "form-control"})
-                            @Html.ValidationMessageFor(model => model.CacheExpiryType)
-                        </div>
-                    }*@
+            @if (widget.IsTypeCacheable())
+            {
+                <hr/>
+                <h4>@await Html.Resource("Advanced")</h4>
+                <hr class="small-margin"/>
+                <div class="form-group">
+                    @Html.InlineCheckboxFor(model => model.Cache)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CacheLength)
+                    @Html.TextBoxFor(model => model.CacheLength, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CacheLength)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CacheExpiryType)
+                    @Html.DropDownListFor(model => model.CacheExpiryType, cacheExpiryOptions, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CacheExpiryType)
+                </div>
+            }
         </card-body>
         <div class="card-footer">
             <div class="row">
