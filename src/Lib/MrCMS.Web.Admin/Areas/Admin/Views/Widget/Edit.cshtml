@@ -53,7 +53,7 @@
                         <div class="form-group">
                             <div class="d-flex">
                                 @Html.LabelFor(model => model.CacheLength, new { @class = "form-label" })
-                                <span class="form-help ms-2" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="<p class='mb-0'>@await Html.Resource("CacheLength", "for how long we will cache the widget results in milliseconds.")</p>" data-bs-html="true">?</span>
+                                <span class="form-help ms-2" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="<p class='mb-0'>@await Html.Resource("CacheLength-hint", "for how long we will cache the widget results in milliseconds.")</p>" data-bs-html="true">?</span>
                             </div>
                             @Html.TextBoxFor(model => model.CacheLength, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.CacheLength)
@@ -63,7 +63,7 @@
                         <div class="form-group">
                             <div class="d-flex">
                                 @Html.LabelFor(model => model.CacheExpiryType, new { @class = "form-label" })
-                                <span class="form-help ms-2" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="<p>Determine when the cache entry will expire</p><ul><li><b>Sliding: </b>The entry will stay in the cache as long as it is read within the defined time</li><li><b>Absolute: </b>the entry will exipre once that point in time has elapsed.</li></ul>" data-bs-html="true">?</span>
+                                <span class="form-help ms-2" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="@await Html.Resource("CacheExpiryType-hint", "<p>Determine when the cache entry will expire</p><ul><li><b>Sliding: </b>The entry will stay in the cache as long as it is read within the defined time</li><li><b>Absolute: </b>the entry will expire once that point in time has elapsed.</li></ul>")" data-bs-html="true">?</span>
                             </div>
                             @Html.DropDownListFor(model => model.CacheExpiryType, cacheExpiryOptions, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.CacheExpiryType)
