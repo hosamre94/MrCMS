@@ -1,28 +1,30 @@
 ﻿@model MrCMS.Web.Admin.Models.AddFormListOptionModel
 @{ Layout = "~/Areas/Admin/Views/Shared/_LayoutPopup.cshtml"; }
 <form asp-action="Add" asp-controller="FormListOption" method="post" class="form-update-form">
-    <fieldset>
-        <legend>
-            @await Html.Resource("Admin Form Add Option Title", "Add option")
-            <span class="btn-group d-inline pull-right">
-                <input type="button" class="btn-primary btn submit-form-btn" value="@await Html.Resource("Admin Form Add Option Button", "Add form option")"/>
-            </span>
-        </legend>
-        <input type="hidden" asp-for="FormPropertyId"/>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="form-group">
-                    <label asp-for="Value"></label>
-                    <input asp-for="Value" class="form-control" />
-                    <span asp-validation-for="Value"></span>
-                </div>
-                <div class="form-group">
-                    <div class="form-check">
-                        <input asp-for="Selected" type="checkbox" class="form-check-input" />
-                        <label asp-for="Selected" class="form-check-label"></label>
-                    </div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">
+                @await Html.Resource("Admin Form Add Option Title", "Add option")
+            </h5>
+            <button type="submit" class="btn btn-primary submit-form-btn">
+                <i class="icon ti ti-device-floppy"></i>
+                @await Html.Resource("Save")
+            </button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" asp-for="FormPropertyId"/>
+
+            <div class="form-group mb-3">
+                <label asp-for="Value" class="form-label"></label>
+                <input asp-for="Value" class="form-control"/>
+                <span asp-validation-for="Value"></span>
+            </div>
+            <div class="form-group mb-3">
+                <div class="form-check">
+                    <input asp-for="Selected" type="checkbox" class="form-check-input"/>
+                    <label asp-for="Selected" class="form-check-label"></label>
                 </div>
             </div>
         </div>
-    </fieldset>
+    </div>
 </form>

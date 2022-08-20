@@ -10,10 +10,12 @@
 
 @if (Model is AdminTab<Form> adminTab)
 {
-    <div class="tab-pane@(isFirst ? " active" : "")" id="@adminTab.TabHtmlId">
-        @{
-            await adminTab.RenderTabPane(Html, Html.GetRequiredService<IMapper>(), form);
-        }
+    <div class="card tab-pane @(isFirst ? "active" : "")" id="@adminTab.TabHtmlId" role="tabpanel">
+        <div class="card-body">
+            @{
+                await adminTab.RenderTabPane(Html, Html.GetRequiredService<IMapper>(), form);
+            }
+        </div>
     </div>
 }
 else if (Model is AdminTabGroup<Form> @group)

@@ -11,13 +11,17 @@
 
     <admin-header>
         <row>
-            <admin-header-title title="@await Html.Resource("admin - edit - form", "Edit Form") "/>
+            <admin-header-title title="@await Html.Resource("admin-edit-form", "Edit Form") "/>
 
             <admin-header-actions>
-                <span class="btn-group pull-right">
-                    <a asp-action="Index" class="btn btn-secondary">@await Html.Resource("admin-back", "Back")</a>
-                    <button type="submit" class="btn-primary btn">@await Html.Resource("admin-save", "Save")</button>
-                </span>
+                <a asp-action="Index" class="btn btn-dark">
+                    <i class="icon ti ti-arrow-back"></i>
+                    @await Html.Resource("admin-back", "Back")
+                </a>
+                <button type="submit" class="btn-primary btn">
+                    <i class="icon ti ti-device-floppy"></i>
+                    @await Html.Resource("admin-save", "Save")
+                </button>
             </admin-header-actions>
         </row>
     </admin-header>
@@ -25,26 +29,27 @@
 
     <div asp-validation-summary="All"></div>
 
-    <div class="form-group">
-        <label asp-for="Name"></label>
-        <input asp-for="Name" type="text" class="form-control"/>
-        <span asp-validation-for="Name"></span>
+    <div class="form-floating mb-3">
+        @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+        @Html.LabelFor(model => model.Name)
     </div>
 
-    <ul class="nav nav-tabs pt-3 mb-2" data-stickytabs="form-@Model.Id">
-        @foreach (var tab in tabs)
-        {
-            ViewData["is-first"] = tab == tabs.First();
-            <partial name="Tab" model="tab" view-data="ViewData"/>
-        }
-    </ul>
-    <div class="tab-content">
-        @foreach (var tab in tabs)
-        {
-            ViewData["is-first"] = tab == tabs.First();
-            <partial name="TabContent" model="tab" view-data="ViewData"/>
-        }
-    </div>
+    <div class="card-tabs">
+        <ul class="nav nav-tabs" role="tablist" data-stickytabs="form-@Model.Id">
+            @foreach (var tab in tabs)
+            {
+                ViewData["is-first"] = tab == tabs.First();
+                <partial name="Tab" model="tab" view-data="ViewData"/>
+            }
+        </ul>
 
+        <div class="tab-content">
+            @foreach (var tab in tabs)
+            {
+                ViewData["is-first"] = tab == tabs.First();
+                <partial name="TabContent" model="tab" view-data="ViewData"/>
+            }
+        </div>
+    </div>
 
 </form>

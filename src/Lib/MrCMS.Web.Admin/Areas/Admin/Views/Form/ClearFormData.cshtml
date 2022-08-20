@@ -3,13 +3,18 @@
 @using (Html.BeginForm("ClearFormData", "Form", FormMethod.Post))
 {
     @Html.HiddenFor(x => x.Id)
-    <fieldset>
-        <legend>
-            @await Html.Resource("Admin Form Delete Entries Title", "Delete All Entries")
-            <span class="btn-group pull-right">
-                <input type="submit" class="btn btn-danger" value="@await Html.Resource("Admin Form Delete Entries Button", "Delete All Entries")"/>
-            </span>
-        </legend>
-        @await Html.Resource("Admin Form Delete Entries Warning", "Deleting entries cannot be undone, do you want to proceed?")
-    </fieldset>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">
+                @await Html.Resource("Admin Form Delete Entries Title", "Delete All Entries")
+            </h5>
+            <button type="submit" class="btn btn-danger">
+                <i class="icon ti ti-trash"></i>
+                @await Html.Resource("Delete")
+            </button>
+        </div>
+        <div class="modal-body">
+            @Html.InfoBlock(await Html.Resource("Heads up") + "!", await Html.Resource("Admin Form Delete Entries Warning", "Deleting entries cannot be undone, do you want to proceed?"), AlertType.danger)
+        </div>
+    </div>
 }

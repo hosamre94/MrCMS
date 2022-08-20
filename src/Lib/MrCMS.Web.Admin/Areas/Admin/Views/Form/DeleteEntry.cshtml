@@ -2,13 +2,18 @@
 @{ Layout = "~/Areas/Admin/Views/Shared/_LayoutPopup.cshtml"; }
 @using (Html.BeginForm("DeleteEntry", "Form", FormMethod.Post))
 {
-    <fieldset>
-        <legend>
-            @await Html.Resource("Admin Form Delete Entry Title", "Delete Entry")
-            <span class="btn-group pull-right">
-                <input type="submit" class="btn btn-danger" value="@await Html.Resource("Admin Form Delete Entry Button", "Delete entry")"/>
-            </span>
-        </legend>
-        @await Html.Resource("Admin Form Delete Entry warning", "Are you sure you want to delete this entry?")
-    </fieldset>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">
+                @await Html.Resource("Admin Form Delete Entry Title", "Delete Entry")
+            </h5>
+            <button type="submit" class="btn btn-danger">
+                <i class="icon ti ti-trash"></i>
+                @await Html.Resource("Delete")
+            </button>
+        </div>
+        <div class="modal-body">
+            @await Html.Resource("Admin Form Delete Entry warning", "Are you sure you want to delete this entry?")
+        </div>
+    </div>
 }

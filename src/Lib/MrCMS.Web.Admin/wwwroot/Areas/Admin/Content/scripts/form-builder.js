@@ -30,5 +30,10 @@
                 }
             });
         }
+
+        $('.form-update-form')?.find("#Name").blur(function (e) {
+            const that = $(this);
+            that.val(that.val().trim().replace(/[^a-zA-Z0-9-/]/g, '-'));
+        });
     })
 }

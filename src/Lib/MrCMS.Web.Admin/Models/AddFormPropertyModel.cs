@@ -14,6 +14,7 @@ namespace MrCMS.Web.Admin.Models
 
         [Required]
         [MaxLength(500)]
+        [RegularExpression("[a-zA-Z0-9\\-]+$", ErrorMessage = "Name must alphanumeric characters only with dashes.")]
         public string Name { get; set; }
 
         [MaxLength(500)]

@@ -1,0 +1,75 @@
+﻿@using MrCMS.Entities.Documents.Web.FormProperties
+@model IList<FormProperty>
+
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>@await Html.Resource("Type")</th>
+            <th>@await Html.Resource("Name")</th>
+            <th>@await Html.Resource("Admin Webpage Form Property Label", "Label Text")</th>
+            <th>@await Html.Resource("Required")</th>
+            <th>@await Html.Resource("Placeholder")</th>
+            <th>@await Html.Resource("Options")</th>
+            <th>@await Html.Resource("Actions")</th>
+        </tr>
+        </thead>
+        <tbody>
+        @{
+            var index = 0;
+        }
+        @foreach (var property in Model.OrderBy(x => x.DisplayOrder))
+        {
+            var options = property is FormPropertyWithOptions ? (FormPropertyWithOptions)property : null;
+            <tr>
+                <td width="50">
+                    <b>@index</b>
+                </td>
+                <td>@property.GetType().Name.BreakUpString()</td>
+                <td>@property.Name</td>
+                <td>@property.LabelText</td>
+                <td>
+                    <span class="status status-@(property.Required ? "teal" : "blue")">@property.Required</span>
+                </td>
+                <td>
+                    @if (property is IHavePlaceholder havePlaceholder)
+                    {
+                        @: @(havePlaceholder.PlaceHolder ?? "-")
+                    }
+                </td>
+                <td>
+                    @if (options != null)
+                    {
+                        <a class="btn btn-sm rounded-pill" id="accordion-@index" href="#collapse-@index" data-bs-toggle="collapse" aria-controls="collapse-@index">
+                            <i class="ti ti-arrow-down"></i>
+                            @await Html.Resource("View")
+                        </a>
+                    }
+                </td>
+                <td>
+                    <div class="pull-right btn-group">
+                        @Html.ActionLink(await Html.Resource("Edit"), "Edit", "FormProperty", new { id = property.Id }, new { @class = "btn btn-secondary btn-sm", data_toggle = "fb-modal" })
+                        @Html.ActionLink(await Html.Resource("Delete"), "Delete", "FormProperty", new { id = property.Id }, new { @class = "btn btn-sm btn-danger", data_toggle = "fb-modal" })
+                    </div>
+                </td>
+            </tr>
+            @if (options != null)
+            {
+                <tr>
+                    <td colspan="9" class="p-0 border-0">
+                        <div class="collapse" id="collapse-@index">
+                            <div class="m-2 card border-bottom">
+                                <div class="card-body">
+                                    <partial name="FormPropertyOptions" model="options"/>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+            index++;
+        }
+        </tbody>
+    </table>
+</div>
