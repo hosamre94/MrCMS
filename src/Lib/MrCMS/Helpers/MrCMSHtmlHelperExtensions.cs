@@ -382,23 +382,60 @@ namespace MrCMS.Helpers
         public static IHtmlContent InfoBlock(this IHtmlHelper helper, string boldText, string text,
             AlertType alertType = AlertType.info)
         {
-            var tagBulder = new TagBuilder("div");
-            tagBulder.AddCssClass("alert alert-" + alertType);
+            var tagBuilder = new TagBuilder("div");
+            tagBuilder.AddCssClass("alert alert-" + alertType);
+
+            var containerTagBuilder = new TagBuilder("div");
+            containerTagBuilder.AddCssClass("d-flex");
+
+            #region Iocn
+
+            var iconClass = alertType switch
+            {
+                AlertType.success => "check",
+                AlertType.info => "info-circle",
+                AlertType.warning => "alert-triangle",
+                AlertType.danger => "alert-circle",
+                _ => throw new ArgumentOutOfRangeException(nameof(alertType), alertType, null)
+            };
+            var iconTagBuilder = new TagBuilder("i");
+            iconTagBuilder.AddCssClass("alert-icon icon ti ti-" + iconClass);
+
+            var iconTagBuilderContainer = new TagBuilder("div");
+            iconTagBuilderContainer.InnerHtml.AppendHtml(iconTagBuilder);
+
+            containerTagBuilder.InnerHtml.AppendHtml(iconTagBuilderContainer);
+
+            #endregion
+
+            #region Text
+
+            var textContainer = new TagBuilder("div");
 
             if (!string.IsNullOrEmpty(boldText))
             {
-                var strongText = new TagBuilder("strong");
+                var strongText = new TagBuilder("h4");
+                strongText.AddCssClass("alert-title");
                 strongText.InnerHtml.Append(boldText);
 
-                tagBulder.InnerHtml.AppendHtml(strongText);
-                tagBulder.InnerHtml.AppendHtml(" " + text);
+                var normalText = new TagBuilder("div");
+                normalText.AddCssClass("text-muted");
+                normalText.InnerHtml.AppendHtml(text);
+
+                textContainer.InnerHtml.AppendHtml(strongText);
+                textContainer.InnerHtml.AppendHtml(normalText);
             }
             else
             {
-                tagBulder.InnerHtml.AppendHtml(text);
+                textContainer.InnerHtml.Append(text);
             }
 
-            return tagBulder;
+            containerTagBuilder.InnerHtml.AppendHtml(textContainer);
+
+            #endregion
+
+            tagBuilder.InnerHtml.AppendHtml(containerTagBuilder);
+            return tagBuilder;
         }
 
         public static async Task<IHtmlContent> RenderFavicon(this IHtmlHelper html, Size size)
