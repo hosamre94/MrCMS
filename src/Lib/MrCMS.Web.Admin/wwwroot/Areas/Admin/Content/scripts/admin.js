@@ -45,6 +45,9 @@ import tabler from '@tabler/core'
 setupProgressbar();
 ajaxSetup();
 $(() => {
+    //Default theme for select2 (Bootstrap 5)
+    $.fn.select2.defaults.set("theme", "bootstrap-5");
+
     registerPlugins();
     setupConfirmation();
     showHideLoading();
@@ -89,8 +92,6 @@ $(() => {
     var mediaUploader = new MediaUploader($(document), {});
     mediaUploader.init();
 
-    //Default theme for select2 (Bootstrap 4)
-    $.fn.select2.defaults.set("theme", "bootstrap4");
 
     if (Dropzone) {
         Dropzone.autoDiscover = false;
