@@ -3,19 +3,25 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutPopup.cshtml";
 }
 
-<form asp-controller="Redirects" asp-action="SetRedirectPage" asp-route-id="@Model.Id">
+<form asp-controller="Redirects" asp-action="SetRedirectPage" asp-route-id="@Model.Id" method="post">
     @Html.ReturnToReferrer()
-    <fieldset>
-        <legend>
-            Set Redirect Page
-            <span class="btn-group display-inline pull-right">
-                <button type="submit" class="btn btn-secondary">Set page</button>
-            </span>
-        </legend>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">
+                @await Html.Resource("Admin Set Redirect Page", "Set Redirect Page")
+            </h5>
+            <button type="submit" class="btn btn-primary">
+                <i class="icon ti ti-device-floppy"></i>
+                @await Html.Resource("Admin Set page", "Set page")
+            </button>
+        </div>
+        <div class="modal-body">
         <div asp-validation-summary="ModelOnly"></div>
         <div class="form-group">
-            <label asp-for="PageId"></label>
-            <input type="hidden" asp-for="PageId" data-webpage-search-select2 class="form-control"/>
+            <label asp-for="PageId" class="form-label"></label>
+            <select asp-for="PageId" data-webpage-search-select2 class="form-control"></select>
+            @Html.ValidationMessageFor(x => x.PageId)
         </div>
-    </fieldset>
+        </div>
+    </div>
 </form>

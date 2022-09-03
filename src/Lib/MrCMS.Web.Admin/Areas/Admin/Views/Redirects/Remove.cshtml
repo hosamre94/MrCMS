@@ -5,15 +5,18 @@
 
 <form asp-controller="Redirects" asp-action="Remove" asp-route-id="@Model.Id">
     @Html.ReturnToReferrer()
-    <fieldset>
-        <legend>
-            Remove
-            <span class="btn-group display-inline pull-right">
-                <button type="submit" class="btn btn-danger">Remove</button>
-            </span>
-        </legend>
-        <p>
-            @string.Format(await Html.Resource("Redirects - Remove", "Are you sure you wish to remove'{0}'?"), Model.UrlSegment)
-        </p>
-    </fieldset>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">
+                @await Html.Resource("Remove")
+            </h5>
+            <button type="submit" class="btn btn-danger">
+                <i class="icon ti ti-trash"></i>
+                @await Html.Resource("Remove")
+            </button>
+        </div>
+        <div class="modal-body">
+            @Html.InfoBlock("Warning", string.Format(await Html.Resource("Redirects - Remove", "Are you sure you wish to remove'{0}'?"), Model.UrlSegment), AlertType.danger)
+        </div>
+    </div>
 </form>

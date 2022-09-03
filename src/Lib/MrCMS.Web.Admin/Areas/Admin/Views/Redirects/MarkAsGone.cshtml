@@ -5,15 +5,17 @@
 
 <form asp-controller="Redirects" asp-action="MarkAsGone" asp-route-id="@Model.Id">
     @Html.ReturnToReferrer()
-    <fieldset>
-        <legend>
-            Mark as gone
-            <span class="btn-group display-inline pull-right">
-                <button type="submit" class="btn btn-danger">Mark as gone</button>
-            </span>
-        </legend>
-        <p>
-            @string.Format(await Html.Resource("Redirects - Mark as gone", "Are you sure you wish to mark '{0}' as gone?"), Model.UrlSegment)
-        </p>
-    </fieldset>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">
+                @await Html.Resource("Mark as gone")
+            </h5>
+            <button type="submit" class="btn btn-danger">
+                @await Html.Resource("Mark as gone")
+            </button>
+        </div>
+        <div class="modal-body">
+            @Html.InfoBlock("Warning", string.Format(await Html.Resource("Redirects - Mark as gone", "Are you sure you wish to mark '{0}' as gone?"), Model.UrlSegment), AlertType.danger)
+        </div>
+    </div>
 </form>

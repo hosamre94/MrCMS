@@ -63,7 +63,7 @@
             </tbody>
         </table>
 
-        @Html.PagedListPager(results, page => Url.Action("Known404s", "Redirects", new {page}), MrCMSPagedListRenderOptions.Bootstrap4)
+        @Html.PagedListPager(results, page => Url.Action("Known404s", "Redirects", new { page }), MrCMSPagedListRenderOptions.Bootstrap4)
     }
     else
     {

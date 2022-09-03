@@ -5,15 +5,17 @@
 
 <form asp-controller="Redirects" asp-action="Reset" asp-route-id="@Model.Id">
     @Html.ReturnToReferrer()
-    <fieldset>
-        <legend>
-            Reset
-            <span class="btn-group display-inline pull-right">
-                <button type="submit" class="btn btn-warning">Reset</button>
-            </span>
-        </legend>
-        <p>
-            @string.Format(await Html.Resource("Redirects - reset", "Are you sure you wish to reset '{0}'?"), Model.UrlSegment)
-        </p>
-    </fieldset>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">
+                @await Html.Resource("Reset")
+            </h5>
+            <button type="submit" class="btn btn-warning">
+                @await Html.Resource("Reset")
+            </button>
+        </div>
+        <div class="modal-body">
+            @Html.InfoBlock("Warning", string.Format(await Html.Resource("Redirects - reset", "Are you sure you wish to reset '{0}'?"), Model.UrlSegment), AlertType.warning)
+        </div>
+    </div>
 </form>
