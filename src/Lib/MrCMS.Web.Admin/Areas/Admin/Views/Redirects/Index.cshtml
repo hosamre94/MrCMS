@@ -24,21 +24,21 @@
     <card>
         <card-body>
             <fieldset>
-                <div class="row mb-3">
+                <div class="row">
                     <div class="col-4">
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <label asp-for="Url" class="form-label"></label>
                             <input asp-for="Url" class="form-control" placeholder="Url" type="text"/>
                         </div>
                     </div>
                     <div class="col-4">
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <label asp-for="Type" class="form-label"></label>
                             <select asp-for="Type" class="form-control" asp-items="@typeOptions"></select>
                         </div>
                     </div>
                     <div class="col-4">
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <label asp-for="SortBy" class="form-label"></label>
                             <select asp-for="SortBy" class="form-control" asp-items="@sortByOptions"></select>
                         </div>
