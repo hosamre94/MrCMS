@@ -1,5 +1,6 @@
 ﻿$ti-font-path: '/node_modules/@tabler/icons/iconfont/fonts' !default;
 
+@import "/node_modules/nprogress/nprogress.css";
 @import "@tabler/core/src/scss/tabler";
 @import "@tabler/icons/iconfont/tabler-icons";
 @import "dropzone";

@@ -19,9 +19,6 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
 <body class="hold-transition sidebar-mini" data-current-ui-culture="@culture.Name" data-antiforgery-token="@Xsrf.GetAndStoreTokens(Context).RequestToken" data-disable-notifications="@user?.DisableNotifications">
-<div id="loading" style="display: none;">
-    <img src="/Areas/Admin/Content/img/ajax-loader2.gif" alt="loading"/>
-</div>
 @RenderBody()
 
 @await Html.RenderAdminVendorScripts()

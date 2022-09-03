@@ -1,3 +1,4 @@
+import {setupProgressbar} from './setup-progress-bar'
 import {ajaxSetup, showHideLoading} from './ajax-config'
 import {setupConfirmation} from './setup-confirmation'
 import {initializeBootstrapPlugins} from "./initialize-bootstrap-plugins";
@@ -41,6 +42,7 @@ import {setupWebpageSelect2} from "./webpage-search";
 import {setupContentAdmin} from "./content-admin";
 import tabler from '@tabler/core'
 
+setupProgressbar();
 ajaxSetup();
 $(() => {
     registerPlugins();
@@ -84,9 +86,7 @@ $(() => {
     setupResourceChooseSite();
     setupWebpageSelect2();
 
-    var mediaUploader = new MediaUploader($(document), {
-
-    });
+    var mediaUploader = new MediaUploader($(document), {});
     mediaUploader.init();
 
     //Default theme for select2 (Bootstrap 4)
@@ -108,6 +108,6 @@ $(() => {
     initializePlugins();
 
     setupSimpleFiles();
-    
+
     setupContentAdmin();
 })

@@ -1,17 +1,20 @@
+import NProgress from "NProgress";
+
 export function ajaxSetup() {
     let requestVerificationToken = $('body').data('antiforgery-token');
     $.ajaxSetup({
         cache: false,
         headers: {
-            'RequestVerificationToken' : requestVerificationToken
-        }        
+            'RequestVerificationToken': requestVerificationToken
+        }
     });
 }
 export function showHideLoading(){
     $(document).ajaxStart(function () {
-        $("#loading").show();
+        if (!NProgress.isRendered())
+            NProgress.start()
     });
     $(document).ajaxStop(function () {
-        $("#loading").hide();
+        NProgress.done()
     });
 }
