@@ -269,20 +269,24 @@ namespace MrCMS.Helpers
             var modelExpressionProvider = htmlHelper.GetRequiredService<ModelExpressionProvider>();
             var metadata = modelExpressionProvider.CreateModelExpression(htmlHelper.ViewData, expression).Metadata;
             var htmlFieldName = modelExpressionProvider.GetExpressionText(expression);
-            var checkbox =
-                CheckBoxHelper(htmlHelper, metadata, htmlFieldName,
-                    htmlHelper.ViewData.Model != null ? expression.Compile()(htmlHelper.ViewData.Model) : (bool?)null,
-                    AnonymousObjectToHtmlAttributes(checkboxAttributes));
+
+            var checkboxHtmlAttributes = AnonymousObjectToHtmlAttributes(checkboxAttributes);
+            if (checkboxHtmlAttributes.ContainsKey("class"))
+                checkboxHtmlAttributes["class"] += "form-check-input";
+            else
+                checkboxHtmlAttributes["class"] = "form-check-input";
+
             var labelHtmlAttributes = AnonymousObjectToHtmlAttributes(labelAttributes);
             // add checkbox style to label, for Bootstrap
             if (labelHtmlAttributes.ContainsKey("class"))
-            {
-                labelHtmlAttributes["class"] += " form-check-label";
-            }
+                labelHtmlAttributes["class"] += "form-check form-switch";
             else
-            {
-                labelHtmlAttributes["class"] = "form-check-label";
-            }
+                labelHtmlAttributes["class"] = "form-check form-switch";
+            
+            var checkbox =
+                CheckBoxHelper(htmlHelper, metadata, htmlFieldName,
+                    htmlHelper.ViewData.Model != null ? expression.Compile()(htmlHelper.ViewData.Model) : (bool?)null,
+                    checkboxHtmlAttributes);
 
             text = text ?? metadata.DisplayName ?? metadata.PropertyName ?? htmlFieldName.Split('.').Last();
             var builder = new HtmlContentBuilder().AppendHtml(checkbox).Append(text);
