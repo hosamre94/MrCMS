@@ -2,10 +2,18 @@
 @using System.Linq
 @using MrCMS.Settings
 @model SiteSettingsBase
-<div id="@Model.DivId" class="tab-pane">
-    @{
-        var type = Model.GetType();
-    }
+@{
+    var type = Model.GetType();
+    var typeName = type.Name;
+}
+<div id="@Model.DivId" class="tab-pane fade">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">
+                @typeName
+            </div>
+        </div>
+        <div class="card-body">
     @foreach (var property in type.GetProperties().Where(info => info.CanWrite && info.Name != "Site"))
     {
         var name = (type.FullName + "." + property.Name).ToLower();
@@ -23,40 +31,53 @@
 
         if (textAreaAttribute != null)
         {
-            @Html.Label(name, displayNameAttribute != null ? displayNameAttribute.DisplayName : property.Name.BreakUpString())
-            var cssClass = textAreaAttribute.CKEnabled ? "ckedit-enabled settings-textarea" : "settings-textarea";
-            @Html.TextArea(name, Convert.ToString(property.GetValue(Model, null)), new { @class = cssClass })
+            var cssClass = textAreaAttribute.CKEnabled ? "ckedit-enabled form-control" : "form-control";
+            <div class="form-group mb-3 row">
+                @Html.Label(name, displayNameAttribute != null ? displayNameAttribute.DisplayName : property.Name.BreakUpString(), new { @class = "col-3 col-form-label" })
+                <div class="col">
+                    @Html.TextArea(name, Convert.ToString(property.GetValue(Model, null)), new { @class = cssClass })
+                </div>
+            </div>
         }
         else if (dropDownSelectionAttribute != null)
         {
-            <div class="form-group">
-                @Html.Label(name, displayNameAttribute != null ? displayNameAttribute.DisplayName : property.Name.BreakUpString())
-                @Html.DropDownList(name, ViewData[dropDownSelectionAttribute.ViewDataName] as IEnumerable<SelectListItem>, new { @class = "form-control" })
+            <div class="form-group mb-3 row">
+                @Html.Label(name, displayNameAttribute != null ? displayNameAttribute.DisplayName : property.Name.BreakUpString(), new { @class = "col-3 col-form-label" })
+                <div class="col">
+                    @Html.DropDownList(name, ViewData[dropDownSelectionAttribute.ViewDataName] as IEnumerable<SelectListItem>, new { @class = "form-select" })
+                </div>
             </div>
         }
         else if (property.PropertyType == typeof(bool))
         {
-            <div class="checkbox">
-                <label>
-                    @Html.CheckBox(name, (bool)property.GetValue(Model, null))
-                    @(displayNameAttribute != null ? displayNameAttribute.DisplayName : property.Name.BreakUpString())
-                </label>
+            <div class="from-group mb-3 row">
+                @Html.Label(name, displayNameAttribute != null ? displayNameAttribute.DisplayName : property.Name.BreakUpString(), new { @class = "col-3 col-form-label" })
+                <div class="col">
+                    <label class="form-check form-switch my-2">
+                        @Html.CheckBox(name, (bool)property.GetValue(Model, null)!, new { @class = "form-check-input" })
+                    </label>
+                </div>
             </div>
         }
         else if (mediaSelectorAttribute != null)
         {
-            <div class="form-group">
-                @Html.Label(name, displayNameAttribute != null ? displayNameAttribute.DisplayName : property.Name.BreakUpString())
-                <br/>
-                @Html.TextBox(name, Convert.ToString(property.GetValue(Model, null)), new { @class = "media-selector" })
+            <div class="form-group mb-3 row">
+                @Html.Label(name, displayNameAttribute != null ? displayNameAttribute.DisplayName : property.Name.BreakUpString(), new { @class = "col-3 col-form-label" })
+                <div class="col">
+                    @Html.TextBox(name, Convert.ToString(property.GetValue(Model, null)), new { @class = "media-selector" })
+                </div>
             </div>
         }
         else
         {
-            <div class="form-group">
-                @Html.Label(name, displayNameAttribute != null ? displayNameAttribute.DisplayName : property.Name.BreakUpString())
-                @Html.TextBox(name, property.GetValue(Model, null), new { @class = "form-control" })
+            <div class="form-group mb-3 row">
+                @Html.Label(name, displayNameAttribute != null ? displayNameAttribute.DisplayName : property.Name.BreakUpString(), new { @class = "col-3 col-form-label" })
+                <div class="col">
+                    @Html.TextBox(name, property.GetValue(Model, null), new { @class = "form-control" })
+                </div>
             </div>
         }
     }
+        </div>
+    </div>
 </div>

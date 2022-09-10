@@ -18,7 +18,7 @@
     @await Html.RenderAdminStyles()
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
-<body class="hold-transition sidebar-mini" data-current-ui-culture="@culture.Name" data-antiforgery-token="@Xsrf.GetAndStoreTokens(Context).RequestToken" data-disable-notifications="@user?.DisableNotifications">
+<body class="theme-light" data-current-ui-culture="@culture.Name" data-antiforgery-token="@Xsrf.GetAndStoreTokens(Context).RequestToken" data-disable-notifications="@user?.DisableNotifications">
 @RenderBody()
 
 @await Html.RenderAdminVendorScripts()

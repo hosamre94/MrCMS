@@ -1,4 +1,7 @@
-﻿@model System.Collections.Generic.List<MrCMS.Settings.SiteSettingsBase>
+﻿@using MrCMS.Settings
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using MrCMS.Web.Admin.Infrastructure.TagHelpers
+@model System.Collections.Generic.List<MrCMS.Settings.SiteSettingsBase>
 @{
     ViewBag.Title = "Edit Settings";
 }
@@ -17,30 +20,36 @@
 
             <admin-header-actions>
                 <button class="btn btn-primary">
-                    @await Html.Resource("admin-save", "Save")
+                    <i class="icon ti ti-device-floppy"></i>
+                    @await Html.Resource("Save")
                 </button>
             </admin-header-actions>
         </row>
     </admin-header>
 
-
-    <div id="tabs">
-        <ul class="nav nav-tabs mb-2" data-stickytabs="site-settings">
-            @foreach (var settingType in Model.OrderBy(x => x.TypeName))
-            {
-                <li class="nav-item">
-                    <a href="#@settingType.DivId" data-toggle="tab" class="nav-link">@settingType.TypeName</a>
-                </li>
-            }
-        </ul>
-        <div class="tab-content">
-            @foreach (var settingType in Model)
-            {
-                <partial name="Settings" model="settingType"/>
-                //Html.RenderPartial("Settings", settingType);
-            }
+    <div class="row" id="tabs">
+        <div class="col-12 col-md-3 px-4">
+            <ul class="nav list-group list-group-transparent mb-3 ml-3 position-sticky" style="top: 80px" data-stickytabs="site-settings">
+                @foreach (var settingType in Model.OrderBy(x => x.TypeName))
+                {
+                    var type = settingType.GetType();
+                    var typeName = type.Name;
+                    <li class="nav-item">
+                        <a class="list-group-item list-group-item-action d-flex align-items-center" href="#@settingType.DivId" data-bs-toggle="tab">
+                            @typeName.BreakUpString()
+                            <small class="text-muted ms-auto">@(type.GetProperties().Length - typeof(SiteSettingsBase).GetProperties().Length)</small>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="col-12 col-md-9">
+            <div class="tab-content">
+                @foreach (var settingType in Model)
+                {
+                    <partial name="Settings" model="settingType"/>
+                }
+            </div>
         </div>
     </div>
-
-
 </form>
