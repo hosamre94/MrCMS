@@ -6,15 +6,15 @@
 @inject ICurrentSiteLocator CurrentSiteLocator
 @{
     var user = await GetCurrentUser.Get();
-    var avatarImg = !string.IsNullOrEmpty(user.AvatarImage) ? user.AvatarImage : "https://via.placeholder.com/160";
-    var site = CurrentSiteLocator.GetCurrentSite();
+    // var avatarImg = !string.IsNullOrEmpty(user.AvatarImage) ? user.AvatarImage : "https://via.placeholder.com/160";
+    // var site = CurrentSiteLocator.GetCurrentSite();
 }
 
 <div class="container-fluid">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <h1 class="navbar-brand navbar-brand-autodark">
+    <h1 class="navbar-brand navbar-brand-autodark border-bottom">
         <a href="@Url.Action("Index", "Home", new { area = "Admin" })">
             @{
                 var adminLogo = Settings.AdminLogo;
@@ -34,7 +34,6 @@
     </div>
     <vc:nav-links/>
 </div>
-
 @*<div class="sidebar">
 
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">

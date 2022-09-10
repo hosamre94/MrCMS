@@ -11,12 +11,13 @@
             if (item.Nodes.Any())
             {
                 var indexOf = Model.Nodes.IndexOf(item);
+                var isActive = item.IsActive(breadcrumbs);
                 ViewData["indexOf"] = indexOf.ToString();
                 ViewData["submenu"] = item.Name;
+                ViewData["isActive"] = isActive;
 
-
-                <li class="nav-item dropdown" data-menu="@indexOf">
-                    <a href="#" class="nav-link dropdown-toggle @(item.IsActive(breadcrumbs) ? "active" : "")" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="false">
+                <li class="nav-item @item.SelectedClass(breadcrumbs)" data-menu="@indexOf">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#@item.Name" aria-expanded="@(isActive ? "true" : "false")">
                         <span class="nav-link-icon">
                             <i class="fs-3 @item.CssClass"></i>
                         </span>
@@ -25,12 +26,11 @@
                         </span>
                     </a>
                     <partial name="Components/NavLinks/SubMenu" model="item.Nodes" view-data="ViewData"></partial>
-
                 </li>
             }
             else
             {
-                <li class="nav-item">
+                <li class="nav-item @item.SelectedClass(breadcrumbs)">
                     <a href="@item.Url" class="nav-link @item.SelectedClass(breadcrumbs)" @(item.OpenInNewWindow ? "target=\"_blank\"" : "")>
                         <i class="nav-icon "></i>
                         <span class="nav-link-icon">

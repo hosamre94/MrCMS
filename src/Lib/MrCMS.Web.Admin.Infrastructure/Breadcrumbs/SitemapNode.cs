@@ -67,7 +67,8 @@ namespace MrCMS.Web.Admin.Infrastructure.Breadcrumbs
         public bool IsActive(List<PageHeaderBreadcrumb> breadcrumbs)
             => SelfAndChildren.Any(node => breadcrumbs.Any(x => x.BreadcrumbType == node.BreadcrumbType));
 
-        public string SelectedClass(List<PageHeaderBreadcrumb> breadcrumbs, string cssClass = "active open")
+        public string SelectedClass(List<PageHeaderBreadcrumb> breadcrumbs,
+            string cssClass = "active open bg-primary-lt")
         {
             return IsActive(breadcrumbs)
                 ? cssClass
