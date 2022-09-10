@@ -2,13 +2,18 @@
 @{ Layout = "~/Areas/Admin/Views/Shared/_LayoutPopup.cshtml"; }
 @using (Html.BeginForm("Delete", "Role", FormMethod.Post))
 {
-    <fieldset>
-        <legend>
-            @await Html.Resource("Admin User Roles Delete", "Delete role")
-            <span class="btn-group pull-right">
-                <input type="submit" class="btn-danger btn" value="@await Html.Resource("Delete")"/>
-            </span>
-        </legend>
-        @Html.InfoBlock(await Html.Resource("Heads up") + "!", await Html.Resource("Admin Delete Info Warning", "Deleting this cannot be undone."), AlertType.danger)
-    </fieldset>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">
+                @await Html.Resource("Admin User Roles Delete", "Delete role")
+            </h5>
+            <button type="submit" class="btn btn-danger">
+                <i class="icon ti ti-trash"></i>
+                @await Html.Resource("Delete")
+            </button>
+        </div>
+        <div class="modal-body">
+            @Html.InfoBlock("Warning", await Html.Resource("Admin Layout Delete Warning", "Deleting this cannot be undone."), AlertType.danger)
+        </div>
+    </div>
 }

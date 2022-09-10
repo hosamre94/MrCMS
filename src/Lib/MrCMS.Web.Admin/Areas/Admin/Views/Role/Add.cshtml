@@ -3,17 +3,22 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutPopup.cshtml";
 }
 <form asp-controller="Role" asp-action="Add" method="post">
-    <fieldset>
-        <legend>
-            @await Html.Resource("Admin User Roles Add", "Add Role")
-            <span class="btn-group pull-right">
-                <input type="submit" class="btn-primary btn" value="@await Html.Resource("Save")" />
-            </span>
-        </legend>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">
+                @await Html.Resource("Admin User Add User", "Add Role")
+            </h5>
+            <button type="submit" class="btn btn-primary">
+                <i class="icon ti ti-device-floppy"></i>
+                @await Html.Resource("Save")
+            </button>
+        </div>
+        <div class="modal-body">
         <div class="form-group">
-            <label asp-for="Name"></label>
-            <input asp-for="Name" type="text" class="form-control" />
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" type="text" class="form-control"/>
             <span asp-validation-for="Name"></span>
         </div>
-    </fieldset>
+        </div>
+    </div>
 </form>
