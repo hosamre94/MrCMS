@@ -10,18 +10,19 @@
     <ul class="navbar-nav">
         @foreach (var item in Model)
         {
+            var selectedClass = item.SelectedClass(breadcrumbs);
             if (item.Nodes != null && item.Nodes.Any())
             {
                 var index = item.Nodes.IndexOf(item);
-                ViewData["submenu"] = item.Name;
-                indexOf = indexOf + index;
-                ViewData["indexOf"] = indexOf;
-                ViewData["item"] = item.Name;
                 isActive = item.IsActive(breadcrumbs);
+                indexOf = indexOf + index;
+                ViewData["item"] = item.Name;
+                ViewData["submenu"] = item.Name;
+                ViewData["indexOf"] = indexOf;
                 ViewData["isActive"] = isActive;
 
-                <li class="nav-item @item.SelectedClass(breadcrumbs)" data-menu="@indexOf">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#@item.Name" aria-expanded="@(isActive ? "true" : "false")">
+                <li class="nav-item @selectedClass" data-menu="@indexOf">
+                    <a href="#" class="nav-link dropdown-toggle @selectedClass" data-bs-toggle="collapse" data-bs-target="#@item.Name" aria-expanded="@(isActive ? "true" : "false")">
                         <span class="nav-link-icon">
                             <i class="ti @(indexOf.Length > 1 ? "ti-circle" : "ti-point")"></i>
                         </span>
@@ -34,7 +35,7 @@
             }
             else
             {
-                <li class="nav-item @item.SelectedClass(breadcrumbs) @">
+                <li class="nav-item @selectedClass">
                     <a href="@item.Url" class="nav-link" @(item.OpenInNewWindow ? "target=\"_blank\"" : "")>
                         <span class="nav-link-icon">
                             <i class="ti ti-point"></i>
