@@ -24,7 +24,7 @@
             <card class="mb-3">
                 <card-body class="pb-0">
                     <div class="d-flex flex-wrap flex-sm-nowrap mb-6">
-                        <div class="flex-shrink-0 me-3 mb-4 d-flex flex-column">
+                        <div class="flex-shrink-0 me-3 mb-3 d-flex flex-column">
                             <img class="rounded" src="@avatarImg" alt="image">
                             <div class="btn-group mt-2">
                                 @{
@@ -41,15 +41,32 @@
                             <div class="d-flex flex-grow-1 flex-xxl-row flex-column-reverse justify-content-between align-items-center mb-2">
                                 <h2 class="align-self-xxl-auto align-self-start m-0">@user.Email</h2>
                                 <div class="align-self-xxl-auto align-self-start mb-1">
+                                    <div class="dropdown d-inline">
+                                        <button type="button" class="btn btn-muted bg-muted-lt btn-icon" data-bs-toggle="dropdown">
+                                            <i class="icon ti ti-dots-vertical"></i>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-arrow">
+                                            <span class="dropdown-header">@await Html.Resource("Admin Additional Settings", "Additional Settings")</span>
+                                            <a href="@Url.Action("SetPassword", "User", new { id = Model.Id })" class="dropdown-item" data-toggle="fb-modal" data-fb-size="sm">
+                                                <i class="icon dropdown-item-icon ti ti-asterisk"></i>
+                                                @await Html.Resource("Admin User Reset Password", "Reset Password")
+                                            </a>
+                                            @if (!user.IsAdmin && user.Id != currentUser.Id)
+                                            {
+                                                using (Html.BeginForm("Impersonate", "User", new { user.Id }, FormMethod.Post))
+                                                {
+                                                    <button type="submit" class="dropdown-item">
+                                                        <i class="icon dropdown-item-icon ti ti-arrow-autofit-height"></i>
+                                                        @await Html.Resource("Admin Impersonate", "Impersonate")
+                                                    </button>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
                                     <a asp-action="Index" class="btn btn-dark">
                                         <i class="icon ti ti-arrow-back"></i>
                                         @await Html.Resource("admin-back", "Back")
                                     </a>
-                                    <a href="@Url.Action("SetPassword", "User", new { id = Model.Id })" class="btn btn-teal" data-toggle="fb-modal" data-fb-size="sm">
-                                        <i class="icon ti ti-asterisk"></i>
-                                        @await Html.Resource("Admin User Reset Password", "Reset Password")
-                                    </a>
-
                                     @if (!onlyAdmin)
                                     {
                                         <a href="@Url.Action("Delete", "User", new { id = Model.Id })" class="btn btn-danger" data-toggle="fb-modal">
@@ -79,7 +96,7 @@
                             </dl>
                         </div>
                     </div>
-                    <ul class="nav nav-tabs border-bottom-0" data-bs-toggle="tabs" data-stickytabs="user-@Model.Id">
+                    <ul class="nav nav-bordered border-bottom-0" data-bs-toggle="tabs" data-stickytabs="user-@Model.Id">
                         <li class="nav-item">
                             <a href="#tab-user-profile" class="nav-link active" data-bs-toggle="tab">
                                 <i class="ti ti-home-2 me-2"></i>
