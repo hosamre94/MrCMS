@@ -15,9 +15,9 @@
             </span>
         </legend>
         <div class="form-group">
-            @Html.LabelFor(x => x.BlockType)
-            @Html.DropDownListFor(x => x.BlockType, selectListItems, new { @class = "form-control" })
-            @Html.ValidationMessageFor(x => x.BlockType)
+            <label asp-for="BlockType" class="form-label"></label>
+            <select asp-for="BlockType" asp-items="selectListItems" class="form-select"></select>
+            <span asp-validation-for="BlockType"></span>
         </div>
     </fieldset>
 </form>

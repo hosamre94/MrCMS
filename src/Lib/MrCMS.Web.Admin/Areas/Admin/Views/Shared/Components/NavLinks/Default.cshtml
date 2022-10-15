@@ -20,7 +20,7 @@
                 <li class="nav-item @selectedClass" data-menu="@indexOf">
                     <a href="#" class="nav-link dropdown-toggle @selectedClass" data-bs-toggle="collapse" data-bs-target="#@item.Name" aria-expanded="@(isActive ? "true" : "false")">
                         <span class="nav-link-icon">
-                            <i class="fs-3 @item.CssClass"></i>
+                            <i class="icon @item.CssClass"></i>
                         </span>
                         <span class="nav-link-title">
                             @await Html.Resource("Nav Links - " + item.Name, item.Name)
@@ -35,7 +35,7 @@
                     <a href="@item.Url" class="nav-link @selectedClass" @(item.OpenInNewWindow ? "target=\"_blank\"" : "")>
                         <i class="nav-icon "></i>
                         <span class="nav-link-icon">
-                            <i class="fs-3 @(item.CssClass ?? "ti ti-circle-dot")"></i>
+                            <i class="icon @(item.CssClass ?? "ti ti-circle-dot")"></i>
                         </span>
                         <span class="nav-link-title">
                             @await Html.Resource("Nav Links - " + item.Name, item.Name)

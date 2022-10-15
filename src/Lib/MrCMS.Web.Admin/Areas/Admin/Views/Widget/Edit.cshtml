@@ -29,9 +29,10 @@
             @Html.Hidden("ReturnUrl", ViewData["return-url"])
 
             <div class="form-floating mb-3">
-                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
-                @Html.LabelFor(model => model.Name)
+                <input asp-for="Name" class="form-control"/>
+                <label asp-for="Name"></label>
             </div>
+            <span asp-validation-for="Name"></span>
 
             @await Html.RenderUpdateCustomAdminProperties(widget)
 
@@ -52,21 +53,21 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <div class="d-flex">
-                                @Html.LabelFor(model => model.CacheLength, new { @class = "form-label" })
+                                <label asp-for="CacheLength" class="form-label"></label>
                                 <span class="form-help ms-2" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="<p class='mb-0'>@await Html.Resource("CacheLength-hint", "for how long we will cache the widget results in milliseconds.")</p>" data-bs-html="true">?</span>
                             </div>
-                            @Html.TextBoxFor(model => model.CacheLength, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.CacheLength)
+                            <input asp-for="CacheLength" class="form-control"/>
+                            <span asp-validation-for="CacheLength"></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <div class="d-flex">
-                                @Html.LabelFor(model => model.CacheExpiryType, new { @class = "form-label" })
+                                <label asp-for="CacheExpiryType" class="form-label"></label>
                                 <span class="form-help ms-2" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="@await Html.Resource("CacheExpiryType-hint", "<p>Determine when the cache entry will expire</p><ul><li><b>Sliding: </b>The entry will stay in the cache as long as it is read within the defined time</li><li><b>Absolute: </b>the entry will expire once that point in time has elapsed.</li></ul>")" data-bs-html="true">?</span>
                             </div>
-                            @Html.DropDownListFor(model => model.CacheExpiryType, cacheExpiryOptions, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.CacheExpiryType)
+                            <select asp-for="CacheExpiryType" asp-items="@cacheExpiryOptions" class="form-select"></select>
+                            <span asp-validation-for="CacheExpiryType"></span>
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,8 @@
 ﻿@model dynamic
 
 <form asp-controller="FileMigration" asp-action="Migrate" method="post">
-    <input type="submit" value="@await Html.Resource("Admin Queue File Migration", "Queue any required migrations")" class="btn btn-sm btn-primary" />
+    <button type="submit" class="btn btn-primary">
+        <i class="icon ti ti-arrows-double-sw-ne"></i>
+        @await Html.Resource("Admin Queue File Migration", "Queue any required migrations")
+    </button>
 </form>

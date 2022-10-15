@@ -30,9 +30,10 @@
     <div asp-validation-summary="All"></div>
 
     <div class="form-floating mb-3">
-        @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
-        @Html.LabelFor(model => model.Name)
+        <input asp-for="Name" class="form-control"/>
+        <label asp-for="Name"></label>
     </div>
+    <span asp-validation-for="Name"></span>
 
     <div class="card-tabs">
         <ul class="nav nav-tabs" role="tablist" data-stickytabs="form-@Model.Id">

@@ -3,7 +3,7 @@
 @model MrCMS.Web.Admin.Models.PostingsModel
 
 <div data-paging-type="async">
-    @Html.LabelFor(model => model.Search)
+    <label asp-for="Search"></label>
     <div class="input-group">
         <input asp-for="Search" type="text" class="form-control"/>
         <span class="input-group-append">

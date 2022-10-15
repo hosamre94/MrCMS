@@ -55,7 +55,7 @@
                             <dd class="col-7">@file.UpdatedOn.ToString("dd-MM-yyyy hh:mm tt")</dd>
                         </dl>
                         <div class="form-group mb-3">
-                            <label>@await Html.Resource("File URL")</label>
+                            <label class="form-label">@await Html.Resource("File URL")</label>
                             <div class="input-icon">
                                 <input type="text" value="@fileUrl" class="form-control" readonly="">
                                 <span class="input-icon-addon">
@@ -64,14 +64,14 @@
                             </div>
                         </div>
                         <div class="form-group mb-3">
-                            @Html.LabelFor(x => x.Title)
-                            @Html.TextBoxFor(x => x.Title, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(x => x.Title)
+                            <label asp-for="Title" class="form-label"></label>
+                            <input asp-for="Title" class="form-control"/>
+                            <span asp-validation-for="Title"></span>
                         </div>
                         <div class="form-group mb-3">
-                            @Html.LabelFor(x => x.Description)
-                            @Html.TextAreaFor(x => x.Description, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(x => x.Description)
+                            <label asp-for="Description" class="form-label"></label>
+                            <textarea asp-for="Description" class="form-control"></textarea>
+                            <span asp-validation-for="Description"></span>
                         </div>
                     </div>
                     <div class="modal-footer">
