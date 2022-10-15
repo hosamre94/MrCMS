@@ -1,23 +1,26 @@
 ﻿@model TestEmailInfo
 
-<form asp-controller="SystemSettings" asp-action="TestMailSettings" method="post" id="edit-settings">
-    <fieldset>
-        <legend>
-            @await Html.Resource("Send Test Email")
-            <span class="btn-group pull-right">
-                <button class="btn btn-primary" type="submit">
-                    @await Html.Resource("Send email")
-                </button>
-            </span>
-        </legend>
-        <div class="row">
-            <div class="col-12">
-                <div class="form-group">
-                    <label asp-for="Email"></label>
-                    <input asp-for="Email" type="text" class="form-control" />
+<form class="mt-4" asp-controller="SystemSettings" asp-action="TestMailSettings" method="post" id="edit-settings">
+    <card>
+        <card-body>
+            <admin-header>
+                <row>
+                    <admin-header-title title="@await Html.Resource("Send Test Email")"/>
+                    <admin-header-actions>
+                        <button class="btn btn-dark" type="submit">
+                            <i class="icon ti ti-mail-forward"></i>
+                            @await Html.Resource("Send email")
+                        </button>
+                    </admin-header-actions>
+                </row>
+            </admin-header>
+            <div class="form-group mb-3 row">
+                <label asp-for="Email" class="col-3 col-form-label"></label>
+                <div class="col">
+                    <input asp-for="Email" type="text" class="form-control"/>
                     <span asp-validation-for="Email"></span>
                 </div>
             </div>
-        </div>
-    </fieldset>
+        </card-body>
+    </card>
 </form>
