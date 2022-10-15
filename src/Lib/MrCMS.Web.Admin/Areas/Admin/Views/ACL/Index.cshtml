@@ -30,53 +30,65 @@
 
     @if (ACLSettings.ACLEnabled)
     {
-        foreach (var group in rules.GroupBy(x => x.Rule).OrderBy(x => x.Key))
-        {
-            <h3 class="pl-2 mt-2">@group.Key.BreakUpString()</h3>
-            <table class="table table-condensed">
-                <thead>
-                    <tr>
-                        <th>
-                            Operation
-                        </th>
-                        @foreach (var role in roles)
-                        {
-                            <th>
-                                @role.Name
-                            </th>
-                        }
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var rule in group.OrderBy(x => x.Type).ThenBy(x => x.Operation))
-                    {
-                        <tr>
-                            <td>
-                                @rule.Operation.BreakUpString()
-                            </td>
-                            @foreach (var role in rule.Roles)
+        <div class="accordion bg-white">
+            @foreach (var group in rules.GroupBy(x => x.Rule).OrderBy(x => x.Key))
+            {
+                <div class="accordion-item">
+                    <h2 class="accordion-header sticky-top bg-white" style="top: 63px;z-index: 10" id="heading-@group.Key">
+                        <button class="accordion-button bg-dark-lt" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@group.Key" aria-expanded="true" aria-controls="collapse-@group.Key">
+                            @group.Key.BreakUpString()
+                            <small class="text-muted ms-2">(@group.Count())</small>
+                        </button>
+                    </h2>
+                    <div id="collapse-@group.Key" class="accordion-collapse collapse show" aria-labelledby="heading-@group.Key" data-bs-parent="#accordionExample">
+                        <table class="table table-borderless m-0">
+                            <thead>
+                            <tr>
+                                <th width="150">
+                                    Operation
+                                </th>
+                                @foreach (var role in roles)
+                                {
+                                    <th width="50">
+                                        @role.Name
+                                    </th>
+                                }
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var rule in group.OrderBy(x => x.Type).ThenBy(x => x.Operation))
                             {
-                                var key = $"{role.Id}-{rule.Key}";
-                                if (role.Name != UserRole.Administrator)
-                                {
+                                <tr>
                                     <td>
-
-                                        <input name="acl" value="@key" type="checkbox" @(role.Allowed ? "checked" : "") />
-
+                                        @rule.Operation.BreakUpString()
                                     </td>
-                                }
-                                else
-                                {
-                                    <td>
-                                        <input type="checkbox" checked="checked" disabled="disabled" />
-                                    </td>
-                                }
+                                    @foreach (var role in rule.Roles)
+                                    {
+                                        var key = $"{role.Id}-{rule.Key}";
+                                        if (role.Name != UserRole.Administrator)
+                                        {
+                                            <td>
+
+                                                <input name="acl" value="@key" type="checkbox" @(role.Allowed ? "checked" : "") class="form-check-input"/>
+
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                <input type="checkbox" checked="checked" disabled="disabled" class="form-check-input"/>
+                                            </td>
+                                        }
+                                    }
+                                </tr>
                             }
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+        </div>
+
     }
     else
     {
