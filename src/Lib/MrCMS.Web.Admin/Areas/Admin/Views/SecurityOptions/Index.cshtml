@@ -16,42 +16,43 @@
 
             <admin-header-actions>
                 <button class="btn btn-primary" type="submit">
+                    <i class="icon ti ti-device-floppy"></i>
                     @await Html.Resource("admin-save", "Save")
                 </button>
             </admin-header-actions>
         </row>
     </admin-header>
 
-
-    <h3>
-        @await Html.Resource("Send Login Notification Emails?")
-    </h3>
-    <p>@await Html.Resource("When enabled for a user role, an email will be sent to the user to alert them of a login using their account. This is useful so users can protect their account should they have not authorised the login.")</p>
-    <table class="table table-striped table-condensed">
-        <tbody>
-        @foreach (var role in roles)
-        {
-            <tr>
-                <td>
-                    @role.Name
-                </td>
-                <td>
-                    @if (authRoleSettings.SendNotificationEmailRoles.Contains(role.Id))
-                    {
-                        <input type="checkbox" name="@nameof(AuthRoleSettings.SendNotificationEmailRoles)" value="@role.Id" checked="checked"/>
-                    }
-                    else
-                    {
-                        <input type="checkbox" name="@nameof(AuthRoleSettings.SendNotificationEmailRoles)" value="@role.Id"/>
-                    }
-                </td>
-            </tr>
-        }
-        </tbody>
-    </table>
-    <hr/>
-
-
+    <card>
+        <div class="card-header">
+            <div class="card-title">@await Html.Resource("Send Login Notification Emails?")</div>
+        </div>
+        <card-body>
+            @Html.InfoBlock(await Html.Resource("Info"), await Html.Resource("When enabled for a user role, an email will be sent to the user to alert them of a login using their account. This is useful so users can protect their account should they have not authorised the login."))
+            <table class="table">
+                <tbody>
+                @foreach (var role in roles)
+                {
+                    <tr>
+                        <td>
+                            @role.Name
+                        </td>
+                        <td>
+                            @if (authRoleSettings.SendNotificationEmailRoles.Contains(role.Id))
+                            {
+                                <input type="checkbox" class="form-check-input" name="@nameof(AuthRoleSettings.SendNotificationEmailRoles)" value="@role.Id" checked="checked"/>
+                            }
+                            else
+                            {
+                                <input type="checkbox" class="form-check-input" name="@nameof(AuthRoleSettings.SendNotificationEmailRoles)" value="@role.Id"/>
+                            }
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </card-body>
+    </card>
 </form>
-
+<hr/>
 <partial name="Settings" model="securitySettings"/>
